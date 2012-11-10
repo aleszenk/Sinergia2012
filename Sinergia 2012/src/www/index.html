@@ -1,0 +1,91 @@
+<!DOCTYPE html">
+<html>
+<head>
+    <title>SimpleIOL Demo: IOL</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <style>
+        div.olControlZoomPanel {
+            height: 108px;
+            width: 36px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        div.olControlZoomPanel div {
+            width: 36px;
+            height: 36px;
+            background-image: url(http://openlayers.org/dev/examples/img/mobile-zoombar.png);
+            left: 0;
+        }
+        div.olControlZoomPanel .olControlZoomInItemInactive {
+            top: 0;
+            background-position: 0 0;
+        }
+        div.olControlZoomPanel .olControlZoomToMaxExtentItemInactive {
+            top: 36px;
+            background-position: 0 -36px;
+        }
+        div.olControlZoomPanel .olControlZoomOutItemInactive {
+            top: 72px;
+            background-position: 0 -72px;
+        }
+    </style>
+
+    <script src="http://openlayers.org/dev/OpenLayers.mobile.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var map;
+
+        // Get rid of address bar on iphone/ipod
+        var fixSize = function() {
+            window.scrollTo(0,0);
+            document.body.style.height = '100%';
+            if (!(/(iphone|ipod)/.test(navigator.userAgent.toLowerCase()))) {
+                if (document.body.parentNode) {
+                    document.body.parentNode.style.height = '100%';
+                }
+            }
+        };
+        setTimeout(fixSize, 700);
+        setTimeout(fixSize, 1500);
+
+        function onBodyLoad()
+        {
+            document.addEventListener("deviceready",onDeviceReady,false);
+        }
+
+        /* When this function is called, PhoneGap has been initialized and is ready to roll */
+        function onDeviceReady()
+        {
+        // create map
+        map = new OpenLayers.Map({
+            div: "map",
+            theme: null,
+            controls: [
+                new OpenLayers.Control.Attribution(),
+                new OpenLayers.Control.TouchNavigation({
+                    dragPanOptions: {
+                        enableKinetic: true
+                    }
+                }),
+                new OpenLayers.Control.ZoomPanel()
+            ],
+            layers: [
+                new OpenLayers.Layer.OSM("OpenStreetMap", null, {
+                    transitionEffect: 'resize'
+                })
+            ],
+            center: new OpenLayers.LonLat(742000, 5861000),
+            zoom: 3
+        });
+        }
+    </script>
+
+</head>
+  <body onload="onBodyLoad()">
+    <div id="map"></div>
+  </body>
+</html>
