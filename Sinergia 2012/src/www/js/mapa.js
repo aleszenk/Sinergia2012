@@ -1,7 +1,33 @@
-function display() {
-	// lo centro en mi apto
-	var initialLocation = new google.maps.LatLng('-34.90530797754054',
-			'-56.18638873100281');
+//---------------------------------------------------------------------
+// Geolocation
+//---------------------------------------------------------------------
+
+function getLocation() {
+	var success = function(p) {
+		alert('Latitude: ' + p.coords.latitude + '\n' + 'Longitude: '
+				+ p.coords.longitude);
+		navigator.notification.alert("position changed!", alertDismissed,
+				p.coords.latitude, p.coords.latitude);
+	};
+	var onLocationFail = function() {
+		alert('Error al detectar la posición');
+		var initialLocation = new google.maps.LatLng('-34.90530797754054',
+				'-56.18638873100281');
+		createMap(initialLocation);
+	};
+	var options = {};
+	options.enableHighAccuracy = true;
+	navigator.geolocation.getCurrentPosition(display, onLocationFail, options);
+}
+
+function display(p) {
+	// uso la location que da el gps
+	var initialLocation = new google.maps.LatLng(p.coords.latitude,
+			p.coords.longitude);
+	createMap(initialLocation);
+}
+
+function createMap(initialLocation) {
 	var myOptions = {
 		zoom : 16,
 		center : initialLocation,
@@ -9,9 +35,7 @@ function display() {
 	};
 	var map = new google.maps.Map(document.getElementById("map_canvas"),
 			myOptions);
-
 	addMarkersToMap(map);
-
 }
 
 function addMarkersToMap(map) {
@@ -80,20 +104,16 @@ function addMarkersToMap(map) {
 
 	// esto es para que ajuste el zoom segun los marcadores
 
-	//var mapBounds = new google.maps.LatLngBounds();
+	var mapBounds = new google.maps.LatLngBounds();
 
-	//mapBounds.extend(latitudeAndLongitudeOne);
+	mapBounds.extend(latitudeAndLongitudeOne);
 	// mapBounds.extend(latitudeAndLongitudeTwo);
 
-	//map.fitBounds(mapBounds);
-}
-
-function error() {
-	alert('Algun error');
+	map.fitBounds(mapBounds);
 }
 
 function init() {
-	display();
+	getLocation();
 }
 
 function mostrarDetalles(detallesDeLaSucursal, mapa, marcador) {

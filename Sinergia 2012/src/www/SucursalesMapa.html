@@ -5,7 +5,6 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport"
 	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
-	<meta name="Access-Control-Allow-Origin" content="*"/>
 <link rel="stylesheet" type="text/css"
 	href="css/jquery.mobile-1.2.0.min.css" />
 <link rel="stylesheet" type="text/css" href="css/index.css" />
@@ -17,6 +16,8 @@
 <script type="text/javascript" src="cordova-2.0.0.js"></script>
 <script type="text/javascript" src="js/mapa.js"></script>
 <script>
+document.addEventListener("deviceready", onDeviceReady, false);
+//register Cordova event listeners when DOM content loaded
 	$('#mapa').live("pagecreate", function() {
 		init();
 	});
@@ -27,26 +28,17 @@
 <body>
 
 	<div data-role="page" id="mapa" data-add-back-btn="true"
-		data-back-btn-text="volver" rel="external">
-
-
+		data-back-btn-text="Volver" rel="external">
 
 		<div data-role="header" data-theme="b" id="hdrMapa"
 			data-nobackbtn="false">
 			<h2>Sucursales Cercanas</h2>
-
-
 		</div>
 		<div data-role="content" data-theme="b" id="contentMapa">
-
 			<div id="map_canvas" style="width: 100%; height: 400px;"></div>
-
 		</div>
 		<div data-role="footer" data-theme="b" id="ftrMapa"
 			data-position="fixed"></div>
-
-
 	</div>
-
 </body>
 </html>
