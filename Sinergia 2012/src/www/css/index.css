@@ -113,4 +113,11 @@ div.carrousel ul li a img{
     border:0px;
 }
 
+#map {
+    padding: 0;
+    margin: 0;
+    width: 100%; /* this isn't really necessary, but let's be clear */
+    height: 240px; /* this will be set dynamically later */
+}
+
 
