@@ -2,51 +2,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="format-detection" content="telephone=no" />
-<meta name="viewport"
-	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
-<link rel="stylesheet" type="text/css"
-	href="css/jquery.mobile-1.2.0.min.css" />
-<link rel="stylesheet" type="text/css" href="css/index.css" />
 <title>Sucursales</title>
-<script type="text/javascript"
-	src="http://maps.google.com/maps/api/js?sensor=true"></script>
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/jquery.mobile-1.2.0.min.js"></script>
-<script type="text/javascript" src="cordova-2.0.0.js"></script>
-<script type="text/javascript" src="js/mapaSucursales.js"></script>
-<script>
-
+<script type="text/javascript">
 	function onDeviceReady() {
 
 	}
-	document.addEventListener("deviceready", onDeviceReady, false);
+	document.addEventListener("deviceready", onDeviceReady, true);
 	//register Cordova event listeners when DOM content loaded
-	$('#mapa').live("pagecreate", function() {
+	$('#mapaSucursales').live("pagecreate", function() {
 		init();
 	});
 </script>
-
 </head>
-
 <body>
-
-	<div data-role="page" id="mapa">
-
+	<div data-role="page" id="mapaSucursales">
 		<div data-role="header" data-theme="b" id="hdrMapa"
 			data-nobackbtn="false">
-			<a href="index.html" data-icon="arrow-l" data-theme="a"  rel="external">Atras</a>
-			<h2>Sucursales Cercanas</h2>
+			<a href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
+			<h2>Sucursales</h2>
 		</div>
 		<div data-role="content" data-theme="b" id="contentMapa">
-			<div id="map_canvas" style="width: 100%;height: 400px"></div>
+			<div id="map_canvas" style="width: 100%; height: 400px"></div>
 		</div>
 		<div data-role="footer" data-theme="a" id="ftrMapa"
 			data-position="fixed">
 			<a href="#" data-role="button" data-theme="b" data-transition="flow">Filtros</a>
 			<a href="#" data-role="button" data-theme="b" data-transition="flow">Ver
 				Listado</a>
-		</div>
+		</div>	
 	</div>
 </body>
 </html>

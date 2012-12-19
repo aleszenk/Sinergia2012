@@ -104,12 +104,12 @@ function addMarkersToMap(map) {
 
 	// esto es para que ajuste el zoom segun los marcadores
 
-	//var mapBounds = new google.maps.LatLngBounds();
+	// var mapBounds = new google.maps.LatLngBounds();
 
-	//mapBounds.extend(latitudeAndLongitudeOne);
+	// mapBounds.extend(latitudeAndLongitudeOne);
 	// mapBounds.extend(latitudeAndLongitudeTwo);
 
-	//map.fitBounds(mapBounds);
+	// map.fitBounds(mapBounds);
 }
 
 function init() {

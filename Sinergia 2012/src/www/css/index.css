@@ -120,4 +120,30 @@ div.carrousel ul li a img{
     height: 240px; /* this will be set dynamically later */
 }
 
+#contentMapaCajeros {
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;}
+
+
+#map_canvasCajeros {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    text-shadow: none;}
+
+#contentMapa {
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;}
+
+
+#map_canvas {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    text-shadow: none;}
+
 

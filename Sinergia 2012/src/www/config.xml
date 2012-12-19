@@ -26,10 +26,10 @@
     xmlns:rim="http://www.blackberry.com/ns/widgets"
 	version="1.0.0.0">
     
-    <name>Blackberry Maps with geolocation</name>
+    <name>Sinergia ICBanking</name>
     
     <description>
-        Blackberyy app using phonegap
+        Sinergia ICBanking app using phonegap
     </description>
     <author>Spherium</author>
     <!--<license href="http://opensource.org/licenses/alphabetical">
