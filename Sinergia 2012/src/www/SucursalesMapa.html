@@ -3,16 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sucursales</title>
-<script type="text/javascript">
-	function onDeviceReady() {
-
-	}
-	document.addEventListener("deviceready", onDeviceReady, true);
-	//register Cordova event listeners when DOM content loaded
-	$('#mapaSucursales').live("pagecreate", function() {
-		init();
-	});
-</script>
 </head>
 <body>
 	<div data-role="page" id="mapaSucursales">
@@ -30,6 +20,19 @@
 			<a href="#" data-role="button" data-theme="b" data-transition="flow">Ver
 				Listado</a>
 		</div>	
+		  <script>
+$(function(){
+             
+					$('#mapaSucursales').live('pageshow',function(){
+
+      
+				init();   
+				   
+});
+                 
+			});     
+          </script>
 	</div>
+		
 </body>
 </html>

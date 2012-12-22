@@ -2,42 +2,39 @@
 // Geolocation
 //---------------------------------------------------------------------
 
-function getLocation() {
-	var success = function(p) {
-		alert('Latitude: ' + p.coords.latitude + '\n' + 'Longitude: '
-				+ p.coords.longitude);
-		navigator.notification.alert("position changed!", alertDismissed,
-				p.coords.latitude, p.coords.latitude);
-	};
-	var onLocationFail = function() {
-		alert('Error al detectar la posición');
-		var initialLocation = new google.maps.LatLng('-34.90530797754054',
-				'-56.18638873100281');
-		createMap(initialLocation);
-	};
-	var options = {};
-	options.enableHighAccuracy = true;
-	navigator.geolocation.getCurrentPosition(display, onLocationFail, options);
-}
+ var map, GeoMarker;
+ 
+      function display() {
+		
+        var mapOptions = {
+          zoom: 16,
+          center: new google.maps.LatLng(-34.90530797754054, -56.18638873100281),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'),
+            mapOptions);
+    
+        GeoMarker = new GeolocationMarker();
+        GeoMarker.setCircleOptions({fillColor: '#808080'});
 
-function display(p) {
-	// uso la location que da el gps
-	var initialLocation = new google.maps.LatLng(p.coords.latitude,
-			p.coords.longitude);
-	createMap(initialLocation);
-}
+        google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+          map.setCenter(this.getPosition());
+          map.fitBounds(this.getBounds());
+        });
 
-function createMap(initialLocation) {
-	var myOptions = {
-		zoom : 16,
-		center : initialLocation,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
-	};
-	var map = new google.maps.Map(document.getElementById("map_canvas"),
-			myOptions);
-	addMarkersToMap(map);
-}
+        google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
+          alert('There was an error obtaining your position. Message: ' + e.message);
+        });
 
+        
+		addMarkersToMap(map);
+		GeoMarker.setMap(map);
+				$(window).resize(function() {
+							google.maps.event.trigger(map, 'resize');
+						
+				});		
+
+      }
 function addMarkersToMap(map) {
 	// aca habria que llamar algo que me devuelva las sucursales y las agrego el
 	// mapa
@@ -113,7 +110,7 @@ function addMarkersToMap(map) {
 }
 
 function init() {
-	getLocation();
+	display();
 }
 
 function mostrarDetalles(detallesDeLaSucursal, mapa, marcador) {

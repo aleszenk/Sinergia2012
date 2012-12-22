@@ -1,36 +1,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Cajeros</title>
-<script type="text/javascript">
-	function onDeviceReady() {
-
-	}
-	document.addEventListener("deviceready", onDeviceReady, true);
-	//register Cordova event listeners when DOM content loaded
-	$('#mapaCajeros').live("pagecreate", function() {
-		initCajeros();
-	});
-</script>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Cajeros</title>
+    </head>
 <body>
-	<div data-role="page" id="mapaCajeros">
-		<div data-role="header" data-theme="b" id="hdrMapa"
-			data-nobackbtn="false">
+	<div data-role="page" id="mapaCajeros" data-add-back-btn="true" data-back-btn-text="Atras">		
+            <div data-role="header" data-theme="b" id="hdrMapa" data-nobackbtn="true" >  
 			<a href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
-			<h2>Cajeros</h2>
-		</div>
-		<div data-role="content" data-theme="b" id="contentMapaCajeros">
-			<div id="map_canvasCajeros" style="width: 100%; height: 400px;">
-			</div>
-		</div>
-		<div data-role="footer" data-theme="a" id="ftrMapa"
+                <h2>Cajeros</h2>  
+            </div>  
+		 <div data-role="content" data-theme="b" id="contentMapaCajeros">  
+                
+                <div id="map_canvasCajeros" style="width: 100%; height:400px;">
+                </div>
+                
+            </div>  
+		<div data-role="footer" data-theme="b" id="ftrMapa"
 			data-position="fixed">
-			<a href="#" data-role="button" data-theme="b" data-transition="flow">Filtros</a>
-			<a href="#" data-role="button" data-theme="b" data-transition="flow">Ver
+			<a href="#" data-role="button" data-theme="a" data-transition="flow">Filtros</a>
+			<a href="#" data-role="button" data-theme="a" data-transition="flow">Ver
 				Listado</a>
 		</div>
+			  <script>
+$(function(){
+             
+					$('#mapaCajeros').live('pageshow',function(){
+
+      
+				initCajeros();   
+				   
+});
+                 
+			});     
+          </script>
 	</div>
+
 </body>
 </html>
