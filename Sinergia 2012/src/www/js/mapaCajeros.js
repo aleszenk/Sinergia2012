@@ -21,6 +21,7 @@ function displayCajeros() {
 		center : new google.maps.LatLng(-34.90530797754054, -56.18638873100281),
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
+	
 	map = new google.maps.Map(document.getElementById('map_canvasCajeros'),
 			mapOptions);
 
@@ -34,11 +35,12 @@ function displayCajeros() {
 				map.setCenter(this.getPosition());
 				map.fitBounds(this.getBounds());
 			});
-
+    	
 	google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
 		alert('There was an error obtaining your position. Message: '
 				+ e.message);
 	});
+	
 	addMarkersToMapCajeros(map);
 	GeoMarker.setMap(map);
 	$(window).resize(function() {
@@ -47,14 +49,19 @@ function displayCajeros() {
 	});
 
 }
+
 function addMarkersToMapCajeros(map) {
 
 	var mapBounds = new google.maps.LatLngBounds();
-	$.getJSON('http://hp-hp/Sinergia2012/ServicioSinergia.svc/cajeros?callback=?', null, function (cajeros) {
-		for(i=0;i<cajeros.EnvioCajerosResult.length;i++){
-		
-			var latitudeAndLongitudeOne = new google.maps.LatLng(cajeros.EnvioCajerosResult[i].Latitud, cajeros.EnvioCajerosResult[i].Longitud);
-			mapBounds.extend(latitudeAndLongitudeOne);
+	$.getJSON('http://hp-hp/Sinergia2012/ServicioSinergia.svc/cajeros?callback=?',
+					null,
+					function(cajeros) {
+						for (i = 0; i < cajeros.EnvioCajerosResult.length; i++) {
+
+							var latitudeAndLongitudeOne = new google.maps.LatLng(
+									cajeros.EnvioCajerosResult[i].Latitud,
+									cajeros.EnvioCajerosResult[i].Longitud);
+							mapBounds.extend(latitudeAndLongitudeOne);
 							var marker1 = new google.maps.Marker({
 								position : latitudeAndLongitudeOne,
 								map : map
@@ -87,7 +94,7 @@ function addMarkersToMapCajeros(map) {
 					});
 	// esto es para que ajuste el zoom segun los marcadores
 	map.fitBounds(mapBounds);
-	//google.maps.event.trigger(map, 'resize');
+	// google.maps.event.trigger(map, 'resize');
 }
 function errorCajero() {
 	alert('Algun error');
@@ -104,7 +111,7 @@ function resizeMap() {
 	// trigger a resize event on the map so it reflects the new size
 	if (map != null) {
 		google.maps.event.trigger(map, 'resize');
-	}
+	} 
 }
 
 function initCajeros() {

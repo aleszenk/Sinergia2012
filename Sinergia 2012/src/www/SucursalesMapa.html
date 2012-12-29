@@ -6,8 +6,7 @@
 </head>
 <body>
 	<div data-role="page" id="mapaSucursales">
-		<div data-role="header" data-theme="b" id="hdrMapa"
-			data-nobackbtn="false">
+		<div data-role="header" data-theme="b" id="hdrMapa" data-nobackbtn="false">
 			<a href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
 			<h2>Sucursales</h2>
 		</div>
@@ -16,20 +15,14 @@
 		</div>
 		<div data-role="footer" data-theme="a" id="ftrMapa"
 			data-position="fixed">
-			<a href="#" data-role="button" data-theme="b" data-transition="flow">Filtros</a>
-			<a href="#" data-role="button" data-theme="b" data-transition="flow">Ver
-				Listado</a>
+			<a href="Filtros.html" data-role="button" data-theme="b" data-transition="flow">Filtros</a>
+			<a href="ListadoSucursales.html" data-role="button" data-theme="b" data-transition="flow">Ver Listado</a>
 		</div>	
 		  <script>
-$(function(){
-             
-					$('#mapaSucursales').live('pageshow',function(){
-
-      
-				init();   
-				   
-});
-                 
+			$(function(){
+				$('#mapaSucursales').live('pageshow',function(){      
+					init();				   
+				});                 
 			});     
           </script>
 	</div>
