@@ -17,6 +17,7 @@
 	var idDepartamentoSeleccionado;
 	var idCiudadSeleccionada;
 	var idZonaSeleccionada;
+	var idSucursalSeleccionada;
 	var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
 
 	function llamarServicioDepartamentosCiudadesZonas(db){
@@ -119,8 +120,8 @@
 									for(j=0;j<sucursales.EnvioSucursalesResult[i].Tramites.length;j++){
 									  var IdTramite = sucursales.EnvioSucursalesResult[i].Tramites[j].IdTramite;
 									  var Descripcion = sucursales.EnvioSucursalesResult[i].Tramites[j].Descripcion;
-									  tx.executeSql('INSERT INTO TRAMITES (id,Descripcion) VALUES ('+ IdTramite+',"'+ Descripcion+'")');
-									  tx.executeSql('INSERT INTO SUCURSALES_TRAMITES (idSucursal,idTramite) VALUES ('+IdSucursal +','+ IdTramite+')');
+									  tx.executeSql('INSERT INTO TRAMITES (id,Descripcion,IdSucursal) VALUES ('+ IdTramite+',"'+ Descripcion+'",'+IdSucursal+')');
+									  
 									}
 									
 								}
@@ -169,10 +170,8 @@
 		tx.executeSql('CREATE TABLE IF NOT EXISTS DEPARTAMENTOS (id unique, Nombre)');
 		tx.executeSql('DROP TABLE IF EXISTS SUCURSALES');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS SUCURSALES (id unique, HorarioAtencion,Direccion,TelContacto,Latitud,Longitud,IdDepartamento,IdCiudad,IdZona)');
-		tx.executeSql('DROP TABLE IF EXISTS SUCURSALES_TRAMITES');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS SUCURSALES_TRAMITES (idSucursal, idTramite)');
 		tx.executeSql('DROP TABLE IF EXISTS TRAMITES');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS TRAMITES (id unique, Descripcion)');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS TRAMITES (id unique, Descripcion,IdSucursal)');
 		tx.executeSql('DROP TABLE IF EXISTS ZONAS');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS ZONAS (id unique, Nombre,IdCiudad)');
 		tx.executeSql('DROP TABLE IF EXISTS IMAGENES');
@@ -343,6 +342,30 @@
 
 	function succesSelectCajerosZona(){
 	  alert("Funciono el select de cajeros por zona");
+	}
+	
+	function tramitesSucursal(idSucursal){
+		idSucursalSeleccionada=idSucursal;
+		db.transaction(selectTramitesSucursal,errorCB,succesSelectTramitesSucursal)
+	
+	}
+	
+	function selectTramitesSucursal(tx){
+	  tx.executeSql('SELECT * FROM TRAMITES WHERE idSucursal='+idSucursalSeleccionada,
+				[], querySuccessSelectTramitesSucursal, errorCB);
+	}
+	
+	function querySuccessSelectTramitesSucursal(tx, results) {
+		var len = results.rows.length;
+		alert("Tramites de la surcursal: " + len);
+		for ( var i = 0; i < len; i++) {
+			alert("Nombre =  " + results.rows.item(i).Descripcion);
+		}
+		 
+	}
+	
+	function succesSelectTramitesSucursal(){
+	  alert("Funciono el select de los tramites");
 	}
 
 	
