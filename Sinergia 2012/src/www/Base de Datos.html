@@ -179,19 +179,70 @@
 		tx.executeSql('CREATE TABLE IF NOT EXISTS IMAGENES (id INTEGER NOT NULL PRIMARY KEY, CadenaBytes)');
 	}
 
-	function queryDBDep(tx) {
-		tx.executeSql('SELECT * FROM DEPARTAMENTOS', [], querySuccessDep,
-				errorCB);	
+	function departamentos(){
+		db.transaction(selectDepartamentos,errorCB,succesSelectDepartamentos)
+	}
+	
+	function selectDepartamentos(tx){
+	  tx.executeSql('SELECT * FROM DEPARTAMENTOS',
+				[], querySuccessSelectDepartamentos, errorCB);
+	}
+	
+	function querySuccessSelectDepartamentos(tx, results) {
+		var len = results.rows.length;
+		alert("Departamentos: " + len);
+		for ( var i = 0; i < len; i++) {
+			alert("Nombre =  " + results.rows.item(i).Nombre);
+		}
+		 
 	}
 
-	function querySuccessDep(tx, results) {
+	function succesSelectDepartamentos(){
+	  alert("Funciono el select de departamentos");
+	}
+	
+	function cajeros(){
+		db.transaction(selectCajeros,errorCB,succesSelectCajeros)
+	}
+	
+	function selectCajeros(tx){
+	  tx.executeSql('SELECT * FROM CAJEROS',
+				[], querySuccessSelectCajeros, errorCB);
+	}
+	
+	function querySuccessSelectCajeros(tx, results) {
 		var len = results.rows.length;
-		alert("Departamentos table: " + len + " rows found.");
+		alert("Cajeros: " + len);
 		for ( var i = 0; i < len; i++) {
-			alert("Row = " + i + " ID = " + results.rows.item(i).id
-					+ " Nombre =  " + results.rows.item(i).Nombre);
+			alert("Nombre =  " + results.rows.item(i).Direccion);
 		}
-		 alert("Se realizo el select de los Departamentos");
+		 
+	}
+
+	function succesSelectCajeros(){
+	  alert("Funciono el select de cajeros");
+	}
+	
+	function sucursales(){
+		db.transaction(selectSucursales,errorCB,succesSelectSucursales)
+	}
+	
+	function selectSucursales(tx){
+	  tx.executeSql('SELECT * FROM SUCURSALES',
+				[], querySuccessSelectSucursales, errorCB);
+	}
+	
+	function querySuccessSelectSucursales(tx, results) {
+		var len = results.rows.length;
+		alert("Sucursales: " + len);
+		for ( var i = 0; i < len; i++) {
+			alert("Nombre =  " + results.rows.item(i).Direccion);
+		}
+		 
+	}
+
+	function succesSelectSucursales(){
+	  alert("Funciono el select de sucursales");
 	}
 
 	function errorCB(err) {
