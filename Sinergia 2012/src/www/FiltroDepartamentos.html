@@ -2,37 +2,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Sucursales</title>
+        <title>Departamentos</title>
     </head>
     <body>
-        <!-- Home -->
-        <div data-role="page" id="page1">
+        <div data-role="page" id="departamentos">
             <div data-role="header" data-theme="b" id="hdrMapa" data-nobackbtn="false">
-				<a href="SucursalesMapa.html" data-icon="arrow-l" data-theme="a">Atras</a>
+				<a href="Filtros.html" data-icon="arrow-l" data-theme="a">Atras</a>
 				<h2>Departamentos</h2>
 				<a data-role="button" href="index.html" class="ui-btn-right">Inicio</a>
 			</div>
-            <div data-role="content">
-				<form id="filtro" name="filtro" action="" method="post">
+            <div data-role="content" style="padding: 0px ">
 					<div class="ui-controlgroup-controls">	
 						<div class="ui-radio">
-							<input type="radio" checked="checked" value="choice-1" id="radio-choice-1-a" name="radio-choice-a">
+							<input type="radio" checked="checked" value="choice-1" id="radio-choice-1-a" name="radio-choice-a"/>
 							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-1-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Radio 1</span>
+								<span class="ui-btn-inner"><span class="ui-btn-text">Montevideo</span></span>
 							</label>
 						</div>
 						<div class="ui-radio">
-							<input type="radio" value="choice-2" id="radio-choice-2-a" name="radio-choice-a">
-							<label data-form="ui-btn-up-a" for="radio-choice-2-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a" class="ui-btn ui-btn-icon-left ui-radio-off ui-btn-up-a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Radio 2</span>
+							<input type="radio" value="choice-2" id="radio-choice-2-a" name="radio-choice-a"/>
+							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-2-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
+								<span class="ui-btn-inner"><span class="ui-btn-text">Canelones</span></span>
 							</label>
-						</div>
+						</div>						
 					</div>
-					<div style="text-align:center;"><a data-role="button" onclick="" class="ui-btn-left">Aceptar</a></div>
-				</form>
+					<div style="text-align:center;"><a href="FiltroCiudad.html" id="botonAceptar" data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a></div>		
 			</div>
-        <script>
-            //App custom javascript
-        </script>
+			<script>
+				//App custom javascript	
+           </script>
+		</div>	
     </body>
 </html>

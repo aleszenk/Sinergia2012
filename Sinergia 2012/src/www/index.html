@@ -13,9 +13,9 @@
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/jquery.mobile-1.2.0.min.js"></script>
 <script type="text/javascript" src="cordova-2.0.0.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
-<script type="text/javascript" src="js/mapaSucursales.js"></script>
+<script type="text/javascript" src="js/database.js"></script>
 <script type="text/javascript" src="js/mapaCajeros.js"></script>
+<script type="text/javascript" src="js/mapaSucursales.js"></script>
 <script type="text/javascript" src="js/jMyCarousel.js"></script>
 <style>
 html,body,#map_canvasCajeros {
@@ -26,44 +26,7 @@ html,body,#map_canvasCajeros {
 </style>
 <script src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
 <script type="text/javascript">
-	
-	//funcion que transforma array de bytes en strings base 64
-	function encode(data) {
-		var str = String.fromCharCode.apply(null, data);
-		return btoa(str).replace(/.{76}(?=.)/g, '$&\n');
-	}
-	
-	$(function() {
-		
-		/*se llama al servicio para cargar las imagenes y a partir de ahi se crea el carrousel
-		si no hay imagenes en base ni conexion entonces no se muestra el carrousel.
-		IMPORTANTE: hay que probar bien el metodo de conversion de byte array a imagenes en todos los SO 
-		ya que al parecer versiones viejas de exploradores no soportan como src de la imagen data:image.......*/
-		$
-				.getJSON(
-						'http://hp-hp/Sinergia2012/ServicioSinergia.svc/imagenes?callback=?',function(){							
-						})
-						.success(function(imagenes) {
-							for (i = 0; i < imagenes.EnvioImagenesResult.length; i++) {
-								$(".carrousel")
-										.find("ul")
-										.append(
-												'<li><img src="data:image/jpg;base64,'
-														+ encode(imagenes.EnvioImagenesResult[i])
-														+ '" width="64" height="64"></li>');
-							}
-							if(imagenes.EnvioImagenesResult.length!=0){
-								$(".carrousel").jMyCarousel({
-									visible : '100%',
-									auto : true,
-									speed : 3000
-								});
-							}
-						})
-						.error(function(){
-							alert("No se pudo establecer conexion con el servidor para cargar las imagenes");
-						});
-	});
+    document.addEventListener("deviceready", onDeviceReady, false);	
 </script>
 <title>Sinergia 2012</title>
 </head>
