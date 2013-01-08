@@ -194,7 +194,9 @@
 	function succesSelectDepartamentos(){
 	  alert("Funciono el select de departamentos");
 	}
-	
+
+var misCajeros;
+
 	function traerCajeros(){
 		db.transaction(selectCajeros,errorCB,succesSelectCajeros)
 	}
@@ -210,8 +212,32 @@
 		for ( var i = 0; i < len; i++) {
 			alert("Nombre =  " + results.rows.item(i).Direccion);
 		}
+        misCajeros=results;
+        cargarCajerosLista();
 		 
 	}
+
+function cargarCajerosLista(){
+    alert("cargar cajeros lista");
+    var ul=document.getElementById("ulCajeros");
+    //var ul=$('ul.ulCajerosClass');
+    //alert(ul.html());
+    alert(misCajeros.rows.length);
+    
+    for(var i=0;i<misCajeros.rows.length;i++){
+        var newLi=document.createElement("LI");
+        //newLi.innerHtml=misCajeros.rows.item(i).Direccion;
+        
+        //newLi.appendChild(document.createTextNode(misCajeros.rows.item(i).Direccion));
+        newLi.setAttribute('data-theme','a');
+        
+        var newA=document.createElement("A");
+        newA.appendChild(document.createTextNode(misCajeros.rows.item(i).Direccion));
+        newLi.appendChild(newA);
+        ul.appendChild(newLi);
+
+    }
+}
 
 	function succesSelectCajeros(){
 	  alert("Funciono el select de cajeros");
