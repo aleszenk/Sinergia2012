@@ -30,7 +30,7 @@ html,body,#map_canvasCajeros {
 </script>
 <title>Sinergia 2012</title>
 </head>
-<body>
+<body onload="onDeviceReady();">
 	<div data-role="page" id="Principal">
 		<div data-role="header" id="hdrPrincipal" data-theme="b"
 			data-nobackbtn="true">
@@ -47,7 +47,7 @@ html,body,#map_canvasCajeros {
 					automáticos</a>
 			</p>
 			<p>
-				<a href="SucursalesMapa.html" data-transition="flow"
+            <a onclick="function(){alert("algo");}" href="SucursalesMapa.html" data-transition="flow"
 					data-role="button">Sucursales</a>
 			</p>
 			<!-- 			Carrousel, hay que cambiarlo para que se cargue dinamicamente

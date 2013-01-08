@@ -42,7 +42,7 @@ function displayCajeros() {
 
 function addMarkersToMapCajeros(map) {	
 	var cajerosResult;
-	$.getJSON('http://hp-hp/Sinergia2012/ServicioSinergia.svc/cajeros?callback=?',
+	$.getJSON('http://192.168.1.38/Sinergia2012/ServicioSinergia.svc/cajeros?callback=?',
 					null,
 					function(cajeros) {
 					cajerosResult=cajeros;

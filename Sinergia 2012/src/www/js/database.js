@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Prueba Internal DB</title>
-<script type="text/javascript" charset="utf-8" src="jquery-1.8.3.min.js">
-	
-</script>
-<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
-<script type="text/javascript" charset="utf-8" src="SaveData.js">
-	
-</script>
-<script type="text/javascript" charset="utf-8">
     var departamentos;
 	var cajeros;
 	var sucursales;
@@ -18,7 +6,7 @@
 	var idCiudadSeleccionada;
 	var idZonaSeleccionada;
 	var idSucursalSeleccionada;
-	var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+	var db=window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
 
 	function llamarServicioDepartamentosCiudadesZonas(db){
 	$.getJSON("http://192.168.1.38/Sinergia2012/ServicioSinergia.svc/Departamentos?callback=?", null,
@@ -44,8 +32,8 @@
 		$.getJSON("http://192.168.1.38/Sinergia2012/ServicioSinergia.svc/Sucursales?callback=?", null,
 							function(sucursalesResult) {
 							    sucursales = sucursalesResult;							
-			db.transaction(addSucursales, errorCB,
-					successAddSucursales);
+								db.transaction(addSucursales, errorCB,
+								successAddSucursales);
 							});
 			
 		}
@@ -82,8 +70,7 @@
 								//alert("la ciudad no tiene zonas");
 								}
 								}
-							}
-							queryDBDep(tx);
+							}							
 	}
 	
 
@@ -176,18 +163,26 @@
 		tx.executeSql('CREATE TABLE IF NOT EXISTS ZONAS (id unique, Nombre,IdCiudad)');
 		tx.executeSql('DROP TABLE IF EXISTS IMAGENES');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS IMAGENES (id INTEGER NOT NULL PRIMARY KEY, CadenaBytes)');
+		
+		llamarServicioDepartamentosCiudadesZonas(db);
+		llamarServicioCajeros(db);
+		llamarServicioSucursales(db);
+		//llamarServicioImagenes(db);
 	}
 
-	function departamentos(){
+	function traerDepartamentos(){
 		db.transaction(selectDepartamentos,errorCB,succesSelectDepartamentos)
 	}
-	
+
+
 	function selectDepartamentos(tx){
+        alert("entre al selectDptos");
 	  tx.executeSql('SELECT * FROM DEPARTAMENTOS',
 				[], querySuccessSelectDepartamentos, errorCB);
 	}
 	
 	function querySuccessSelectDepartamentos(tx, results) {
+        alert("query success");
 		var len = results.rows.length;
 		alert("Departamentos: " + len);
 		for ( var i = 0; i < len; i++) {
@@ -200,7 +195,7 @@
 	  alert("Funciono el select de departamentos");
 	}
 	
-	function cajeros(){
+	function traerCajeros(){
 		db.transaction(selectCajeros,errorCB,succesSelectCajeros)
 	}
 	
@@ -222,7 +217,7 @@
 	  alert("Funciono el select de cajeros");
 	}
 	
-	function sucursales(){
+	function traerSucursales(){
 		db.transaction(selectSucursales,errorCB,succesSelectSucursales)
 	}
 	
@@ -371,20 +366,10 @@
 	
 
 	function onDeviceReady() {
-		
+		db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
 		db.transaction(populateDB, errorCB, successCB);
-		llamarServicioDepartamentosCiudadesZonas(db);
-		llamarServicioCajeros(db);
-		llamarServicioSucursales(db);
-		llamarServicioImagenes(db);
 	}
 	
 	function addListener() {
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
-</script>
-</head>
-<body onload="addListener();">Probando Generar BD interna con
-	datos
-</body>
-</html>
