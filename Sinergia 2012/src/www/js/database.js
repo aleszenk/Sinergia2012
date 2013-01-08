@@ -226,14 +226,32 @@ function cargarCajerosLista(){
     
     for(var i=0;i<misCajeros.rows.length;i++){
         var newLi=document.createElement("LI");
-        //newLi.innerHtml=misCajeros.rows.item(i).Direccion;
         
-        //newLi.appendChild(document.createTextNode(misCajeros.rows.item(i).Direccion));
+        var divLi=document.createElement("DIV");
+        var divA=document.createElement("DIV");
+        
+        
+        divLi.setAttribute('class','ui-btn-inner ui-li');
+        divA.setAttribute('class','ui-btn-text');
+        
         newLi.setAttribute('data-theme','a');
+        newLi.setAttribute('class','ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-last ui-btn-up-a');
+        newLi.setAttribute('data-corners','false');
+        newLi.setAttribute('data-shadow','false');
+        newLi.setAttribute('data-iconshadow','true');
+        newLi.setAttribute('data-wrapperels','div');
+        newLi.setAttribute('data-icon','arrow-r');
+        newLi.setAttribute('data-iconpos','right');
         
         var newA=document.createElement("A");
-        newA.appendChild(document.createTextNode(misCajeros.rows.item(i).Direccion));
-        newLi.appendChild(newA);
+        //newA.appendChild(document.createTextNode(misCajeros.rows.item(i).Direccion));
+        newA.appendChild(document.createTextNode("azul");
+        newA.setAttribute('data-transition','slide');
+        newA.setAttribute('class','ui-link-inherit');
+        newLi.appendChild(divLi);
+        divLi.appendChild(divA);
+        divA.appendChild(newA);
+        //newLi.appendChild(newA);
         ul.appendChild(newLi);
 
     }
