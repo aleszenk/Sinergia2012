@@ -6,7 +6,7 @@
     </head>
     <body>
         <!-- Home -->
-        <div data-role="page" id="page1">
+        <div data-role="page" id="sucursal">
             <div data-role="header" data-theme="b" id="hdrMapa" data-nobackbtn="false">
 				<a href="ListadoSucursales.html" data-icon="arrow-l" data-theme="a">Atras</a>
 				<h2>Sucursal</h2>
@@ -24,7 +24,7 @@
                     <div class="ui-block-b">
 						<div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label></label>
+                                <label id="lblHorario"></label>
                             </fieldset>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                     <div class="ui-block-b">
 						<div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label></label>
+                                <label id="lblDireccion"></label>
                             </fieldset>
                         </div>
                     </div>
@@ -52,14 +52,14 @@
                     <div class="ui-block-b">
 						<div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label></label>
+                                <a id="tel" href="#" ></a>
                             </fieldset>
                         </div>
                     </div>
                     <div class="ui-block-a">
 						<div data-role="fieldcontain">
 							<fieldset data-role="controlgroup">
-								<label><strong>T&aacute;mites</strong></label>
+								<label><strong>Tr&aacute;mites</strong></label>
 							</fieldset>
 						</div>
                     </div>
@@ -68,16 +68,25 @@
                     <div>
 						<div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label></label>
+                                <div id="lblTramites"></div>
                             </fieldset>
                         </div>
                     </div>					
                 </div>
 				<div style="text-align:center;"><a data-role="button" href="SucursalesMapa.html" class="ui-btn-left">Ver en el Mapa</a></div>
             </div>
-        </div>
-        <script>
-            //App custom javascript
+			<script>
+            	$(function()
+				{
+					$('#sucursal').live('pageshow',function()
+					{
+						var arrayUrl = document.URL.split('=');
+						var id = arrayUrl[1];
+						traerSucursalID(id);
+					});
+				});
         </script>
+        </div>
+        
     </body>
 </html>

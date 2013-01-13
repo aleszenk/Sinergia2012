@@ -38,12 +38,16 @@
 							</label>
 						</div>
 					</div>
-					<div style="text-align:center;"><a href="#" id="botonAceptar" data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a></div>		
+					<div style="text-align:center;">
+						<a href="#" id="botonAceptar" data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a>
+					</div>		
 			</div>
 			<script>
 				//App custom javascript	
-				$('input').click(function(evt){		
-					if($("#radio-choice-4-a").is(":checked")){
+				$('input').click(function(evt)
+				{
+					if($("#radio-choice-4-a").is(":checked"))
+					{
 						$("#botonAceptar").attr("href","FiltroDepartamentos.html");
 					}else{
 						//utilizar el filtro elegido y navegar a la pagina del mapa.

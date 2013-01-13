@@ -27,7 +27,7 @@
         });
 
         
-		addMarkersToMap(map);
+		//addMarkersToMap(map);
 		GeoMarker.setMap(map);
 				$(window).resize(function() {
 							google.maps.event.trigger(map, 'resize');
@@ -125,4 +125,76 @@ function mostrarDetalles(detallesDeLaSucursal, mapa, marcador) {
 	});
 	ventanaMostrar.open(mapa, marcador);
 
+}
+
+function cargarMapaSucursalesZona(sucursalesAux) {
+    
+
+    var mapOptions = {
+    zoom: 16,
+    center: new google.maps.LatLng(-34.90530797754054, -56.18638873100281),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    
+    var mimapa = new google.maps.Map(document.getElementById('map_canvas'),
+                              mapOptions);
+    
+    GeoMarker = new GeolocationMarker();
+    GeoMarker.setCircleOptions({fillColor: '#808080'});
+    
+    google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+                                      mimapa.setCenter(this.getPosition());
+                                      mimapa.fitBounds(this.getBounds());
+                                      });
+    
+    google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
+                                  alert('There was an error obtaining your position. Message: ' + e.message);
+                                  });
+    
+    
+    agregarMarcadoresMapaSucursales(sucursalesAux,mimapa);
+    GeoMarker.setMap(mimapa);
+    $(window).resize(function() {
+                     google.maps.event.trigger(mimapa, 'resize');
+                     
+                     });		
+    
+}
+
+
+function agregarMarcadoresMapaSucursales(sucursalesAux,mapa1){
+    
+  
+
+    alert('sucursalesAux='+sucursalesAux.rows.length);
+    for (i = 0; i < sucursalesAux.rows.length; i++) {
+        var latitudeAndLongitudeOne = new google.maps.LatLng(
+                                                             sucursalesAux.rows.item(i).Latitud,
+                                                             sucursalesAux.rows.item(i).Longitud);
+        
+        
+        var marker1 = new google.maps.Marker({
+                                             position : latitudeAndLongitudeOne,
+                                             map : mapa1
+                                             });
+
+        var detalles = "Direccion: "
+        + sucursalesAux.rows.item(i).Direccion
+        + "<br/>Horario de Atencion: "
+        + sucursalesAux.rows.item(i).HorarioAtencion;
+        
+        //faltan detalles
+        
+        
+        
+        google.maps.event.addListener(marker1, 'click',
+                                      function() {
+                                      mostrarDetalles(detalles, mapa1,
+                                                            marker1);
+                                      });
+    }
+}
+
+function cargarSucursalesZona(idZona){
+    traerSucursalesPorZona(idZona);
 }

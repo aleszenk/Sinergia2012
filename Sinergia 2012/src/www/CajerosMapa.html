@@ -25,10 +25,33 @@
 			  <script>
 $(function(){           
 					$('#mapaCajeros').live('pageshow',function(){
-				//cajeros();
-				initCajeros();   
-				   
-});
+                                           
+                                           var indiceInterrogacion=document.URL.indexOf('?');
+                                           var url=document.URL.substring(indiceInterrogacion+1);
+                                           
+                                           var arrayUrl=url.split('=');
+                                           
+                                           
+                                           var filtro;
+                                           var valorFiltro;
+                                           if(arrayUrl!=null){
+                                           filtro = arrayUrl[0];
+                                           valorFiltro = arrayUrl[1];
+                                           }
+                                           
+                                           if(filtro=="id"){
+                                           //llamar metodo con logica de zona
+                                           
+                                           cargarCajerosZona(valorFiltro);
+                                           }else if(filtro=="distancia") {
+                                           
+                                           //llamar metodo con logica de distancia
+                                           metodoDistancia(valorFiltro);
+                                           }else{
+                                           
+                                           initCajeros();
+                                           }	   
+                                        });
                  
 			});     
           </script>

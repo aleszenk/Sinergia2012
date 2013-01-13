@@ -12,24 +12,56 @@
 				<a data-role="button" href="index.html" class="ui-btn-right">Inicio</a>
 			</div>
             <div data-role="content" style="padding: 0px ">
-					<div class="ui-controlgroup-controls">	
-						<div class="ui-radio">
-							<input type="radio" checked="checked" value="choice-1" id="radio-choice-1-a" name="radio-choice-a"/>
-							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-1-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Zona 1</span></span>
-							</label>
-						</div>
-						<div class="ui-radio">
-							<input type="radio" value="choice-2" id="radio-choice-2-a" name="radio-choice-a"/>
-							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-2-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Zona 2</span></span>
-							</label>
-						</div>					
-					</div>
-					<div style="text-align:center;"><a href="#" id="botonAceptar" data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a></div>		
+				<div id="contenedor" class="ui-controlgroup-controls"></div>
+				<div style="text-align:center;">
+					<a onclick="irMapaXZona();" href="" id="botonAceptar" data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a>
+				</div>
+				<input id="selectedID" type="hidden" name="country" value="">
 			</div>
 			<script>
-				//App custom javascript					
+				$(function(){
+					$('#zonas').live('pageshow',function()
+					{
+						var arrayUrl = document.URL.split('=');
+						var idCiudad = arrayUrl[1];						
+						zonasPorCiudad(idCiudad);
+					});
+				});
+				
+				function irMapaXZona()
+				{
+					//en el value del hidden input almaceno el id seleccionado
+					hiddenInput = document.getElementById('selectedID');
+					queryString = hiddenInput.getAttribute('value');
+                    
+                    
+                    var indiceInterrogacion=queryString.indexOf('?');
+                    var url=queryString.substring(indiceInterrogacion+1);
+                    
+                    var arrayUrl=url.split('=');
+                   
+					var idZona = arrayUrl[0];
+					var opcion = arrayUrl[1];
+                    
+					if(opcion != '')
+					{
+                        //esta opcion aca llega como undefined, hay que ver como cargarla.
+                        //esto es para probar lo de los cajeros nomas, cambiarlo para ver las sucursales
+                        
+                        $("#botonAceptar").attr("href","CajerosMapa.html?id=" + idZona);
+                        
+                        
+//						if(opcion=="cajero"){
+//							$("#botonAceptar").attr("href","CajerosMapa.html?id=" + idZona);
+//						}else{
+//							$("#botonAceptar").attr("href","SucursalesMapa.html?id=" + idZona);
+//						}
+					}
+					else
+					{
+						alert('DEBE SELECCIONAR UNA ZONA');
+					}
+				}					
            </script>
 		</div>	
     </body>
