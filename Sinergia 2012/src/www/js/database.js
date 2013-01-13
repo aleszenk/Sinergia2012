@@ -11,7 +11,7 @@
 	var opcionElegida="cajero";
 
 	function llamarServicioDepartamentosCiudadesZonas(db){
-		$.getJSON("http://192.168.1.34/Sinergia2012/ServicioSinergia.svc/Departamentos?callback=?", null,
+		$.getJSON("http://192.168.1.102/Sinergia2012/ServicioSinergia.svc/Departamentos?callback=?", null,
 		function(departamentosResult) {
 			departamentos = departamentosResult;							
 			db.transaction(addDepartamentosCiudadesZonas, errorCB, successAddDepartamentosCiudadesZonas);
@@ -19,7 +19,7 @@
 	}
 	
 	function llamarServicioCajeros(db){
-		$.getJSON("http://192.168.1.34/Sinergia2012/ServicioSinergia.svc/Cajeros?callback=?", null,
+		$.getJSON("http://192.168.1.102/Sinergia2012/ServicioSinergia.svc/Cajeros?callback=?", null,
 		function(cajerosResult) {
 			cajeros = cajerosResult;							
 			db.transaction(addCajeros, errorCB, successAddCajeros);
@@ -27,7 +27,7 @@
 	}
 	
 	function llamarServicioSucursales(db){
-		$.getJSON("http://192.168.1.34/Sinergia2012/ServicioSinergia.svc/Sucursales?callback=?", null,
+		$.getJSON("http://192.168.1.102/Sinergia2012/ServicioSinergia.svc/Sucursales?callback=?", null,
 		function(sucursalesResult) {
 			sucursales = sucursalesResult;							
 			db.transaction(addSucursales, errorCB, successAddSucursales);
@@ -35,7 +35,7 @@
 	}
 	
 	function llamarServicioImagenes(db){
-		$.getJSON("http://192.168.1.34/Sinergia2012/ServicioSinergia.svc/Imagenes?callback=?", null,
+		$.getJSON("http://192.168.1.102/Sinergia2012/ServicioSinergia.svc/Imagenes?callback=?", null,
 		function(imagenesResult) {
 			imagenes = imagenesResult;							
 			db.transaction(addImagenes, errorCB, successAddImagenes);
@@ -396,8 +396,50 @@ function traerCajerosPorZona(idZona){
                    
                    tx.executeSql('SELECT * FROM CAJEROS WHERE IdZona='+idZona, [], function(tx,results){
                                  // tx.executeSql('SELECT * FROM CAJEROS', [], function(tx,results){
+                                 //habria que cambiar esto, devolver un array con objetos, en lugar de rows
+                                 //asi la funcion del otro lado llama con los atributos.
                                  
                                  cargarMapaCajerosZona(results);
+                                 });
+                   
+                   });
+}
+
+function traerSucursalesPorDistancia(distancia,latActual,longActual){
+    db.transaction(function(tx) {
+                 
+                   tx.executeSql('SELECT * FROM SUCURSALES', [], function(tx,results){
+                                 
+                                 //recorro el resultado, pregunto si la distancia al origen es menor a la parametro y lo agrego a un array
+                                 //luego llamo a funcion para cargar los puntos en el mapa
+                                 
+                                 var sucursalesAMostrar=new Array();  
+                                 
+                                 alert('en results. largo resultado= '+results.rows.length);
+                                 
+                                 var len = results.rows.length;
+                                 for (var i = 0; i < len; ++i) {
+                                 
+                                    var obj = results.rows.item(i);
+                                 
+                                    var latPunto=obj.Latitud;
+                                    var longPunto=obj.Longitud;
+                                 
+                                    var distanciaPuntoAOrigen;
+                                 
+                                    distanciaPuntoAOrigen= calcularDistancia(latActual, longActual, latPunto, longPunto);
+                                 
+                                 alert('distanciaPuntoAOrigen: '+distanciaPuntoAOrigen);
+                                 
+                                    if(distanciaPuntoAOrigen<=distancia){
+                                        sucursalesAMostrar.push(obj);
+                                 alert('entre al if');
+                                 
+                                    }
+                                 }
+                                 
+                                 cargarMapaSucursalesDistancia(sucursalesAMostrar);
+                                 
                                  });
                    
                    });

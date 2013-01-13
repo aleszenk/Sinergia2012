@@ -139,7 +139,7 @@ function cargarMapaCajerosZona(cajerosAux){
                                   });
     
     
-    agregarMarcadoresMapaSucursales(cajerosAux,mimapa);
+    agregarMarcadoresMapaCajeros(cajerosAux,mimapa);
     GeoMarker.setMap(mimapa);
     $(window).resize(function() {
                      google.maps.event.trigger(mimapa, 'resize');
@@ -153,7 +153,7 @@ function agregarMarcadoresMapaCajeros(cajerosAux,mapa1){
     
     
     
-    alert('cajerosAux='+cajerosAux.rows.length);
+    //alert('cajerosAux='+cajerosAux.rows.length);
     for (i = 0; i < cajerosAux.rows.length; i++) {
         var latitudeAndLongitudeOne = new google.maps.LatLng(
                                                              cajerosAux.rows.item(i).Latitud,

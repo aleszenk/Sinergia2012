@@ -50,8 +50,22 @@
 					{
 						$("#botonAceptar").attr("href","FiltroDepartamentos.html");
 					}else{
+                                 if($("#radio-choice-2-a").is(":checked"))
+                                 {
+                                 
+                                 //distancia 2km
+                                    $("#botonAceptar").attr("href","SucursalesMapa.html?distancia=2000");
+                                 }else if($("#radio-choice-3-a").is(":checked"))
+                                 {
+                                 //distancia 5km
+                                 
+                                    $("#botonAceptar").attr("href","SucursalesMapa.html?distancia=5000");
+                                 
+                                 }else{
 						//utilizar el filtro elegido y navegar a la pagina del mapa.
-						$("#botonAceptar").attr("href","SucursalesMapa.html");
+                                 
+                                    $("#botonAceptar").attr("href","SucursalesMapa.html");
+                                 }
 					}
 				});
            </script>
