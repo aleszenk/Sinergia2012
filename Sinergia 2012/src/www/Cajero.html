@@ -6,7 +6,7 @@
     </head>
     <body>
         <!-- Home -->
-        <div data-role="page" id="page1">
+        <div data-role="page" id="cajero">
             <div data-role="header" data-theme="b" id="hdrMapa" data-nobackbtn="false">
 				<a href="ListadoCajeros.html" data-icon="arrow-l" data-theme="a">Atras</a>
 				<h2>Cajero</h2>
@@ -24,7 +24,7 @@
                     <div class="ui-block-b">
 						<div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label></label>
+                                <label id="lblHorario"></label>
                             </fieldset>
                         </div>
                     </div>
@@ -38,16 +38,38 @@
                     <div class="ui-block-b">
 						<div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label></label>
+                                <label id="lblDireccion"></label>
+                            </fieldset>
+                        </div>
+                    </div>
+					<div class="ui-block-a">
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup">
+								<label><strong>Permite Deposito</strong></label>
+							</fieldset>
+						</div>
+                    </div>
+                    <div class="ui-block-b">
+						<div data-role="fieldcontain">
+                            <fieldset data-role="controlgroup">
+                                <label id="lblDeposito"></label>
                             </fieldset>
                         </div>
                     </div>					
                 </div>
-				<div style="text-align:center;"><a data-role="button" href="CajerosMapa.html" class="ui-btn-left">Ver en el Mapa</a></div>
+				<div style="text-align:center;"><a id="verMapaCajero" data-role="button" href="CajerosMapa.html" class="ui-btn-left">Ver en el Mapa</a></div>				
             </div>
-        </div>
-        <script>
-            //App custom javascript
-        </script>
+			<script>
+				$(function()
+				{
+					$('#cajero').on('pageshow',function()
+					{
+						var arrayUrl = document.URL.split('=');
+						var id = arrayUrl[1];
+						traerCajeroID(id);
+					});
+				});
+			</script>
+        </div>        
     </body>
 </html>

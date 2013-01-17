@@ -2,127 +2,160 @@
 // Geolocation
 //---------------------------------------------------------------------
 
- var map, GeoMarker;
- 
-      function display() {
-		
-        var mapOptions = {
-          zoom: 16,
-          center: new google.maps.LatLng(-34.90530797754054, -56.18638873100281),
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById('map_canvas'),
-            mapOptions);
-    
-        GeoMarker = new GeolocationMarker();
-        GeoMarker.setCircleOptions({fillColor: '#808080'});
+var map, GeoMarker;
 
-        google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
-          map.setCenter(this.getPosition());
-          map.fitBounds(this.getBounds());
-        });
+var latitudActual, longitudActual;
 
-        google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
-          alert('There was an error obtaining your position. Message: ' + e.message);
-        });
+function mostrarSucursal(sucursal) {
+	var mapOptions = {
+		zoom : 13,
+		center : new google.maps.LatLng(sucursal.Latitud, sucursal.Longitud),
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
-        
-		addMarkersToMap(map);
-		GeoMarker.setMap(map);
-				$(window).resize(function() {
-							google.maps.event.trigger(map, 'resize');
-						
-				});		
-
-      }
-function addMarkersToMap(map) {
-	// aca habria que llamar algo que me devuelva las sucursales y las agrego el
-	// mapa
-	// ahora pongo datos inventados
-
-	// sucursal 1
-	var latitudeAndLongitudeOne = new google.maps.LatLng('-34.90530797754054',
-			'-56.189388731005');
-
+	var latitudeAndLongitudeOne = new google.maps.LatLng(sucursal.Latitud,
+			sucursal.Longitud);
 	var marker1 = new google.maps.Marker({
 		position : latitudeAndLongitudeOne,
 		map : map,
-		title : "Sucursal 1"
+		title : "Sucursal"
 	});
-	// sucursal 2
-	var latitudeAndLongitudeTwo = new google.maps.LatLng('-34.90730797754054',
-			'-56.189388731005');
-
-	var marker2 = new google.maps.Marker({
-		position : latitudeAndLongitudeTwo,
-		map : map
-	});
-	// sucursal 3
-	var latitudeAndLongitude3 = new google.maps.LatLng('-34.90730797754054',
-			'-56.187388731005');
-
-	var marker3 = new google.maps.Marker({
-		position : latitudeAndLongitude3,
-		map : map
-	});
-
-	// sucursal 4
-	var latitudeAndLongitude4 = new google.maps.LatLng('-34.90930797754054',
-			'-56.187388731005');
-
-	var marker4 = new google.maps.Marker({
-		position : latitudeAndLongitude4,
-		map : map
-	});
-	// sucursal 5
-	var latitudeAndLongitude5 = new google.maps.LatLng('-34.90930797754054',
-			'-56.189388731005');
-
-	var marker5 = new google.maps.Marker({
-		position : latitudeAndLongitude5,
-		map : map
-	});
+	var detalles = "Direccion: " + sucursal.Direccion
+			+ "<br/>Horario de Atencion: " + sucursal.HorarioAtencion;
 
 	google.maps.event.addListener(marker1, 'click', function() {
-		mostrarDetalles("Detalles sucursal 1", map, marker1);
+		mostrarDetallesSucursal(detalles, map, marker1);
 	});
-	google.maps.event.addListener(marker2, 'click', function() {
-		mostrarDetalles("Detalles sucursal 2", map, marker2);
+	$(window).resize(function() {
+		google.maps.event.trigger(map, 'resize');
 	});
-	google.maps.event.addListener(marker3, 'click', function() {
-		mostrarDetalles("Detalles sucursal 3", map, marker3);
-	});
-	google.maps.event.addListener(marker4, 'click', function() {
-		mostrarDetalles("Detalles sucursal 4", map, marker4);
-	});
-	google.maps.event.addListener(marker5, 'click', function() {
-		mostrarDetalles("Detalles sucursal 5", map, marker5);
+}
+
+function display() {
+
+	var mapOptions = {
+		zoom : 13,
+		center : new google.maps.LatLng(-34.90530797754054, -56.18638873100281),
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+	GeoMarker = new GeolocationMarker();
+	GeoMarker.setCircleOptions({
+		fillColor : '#808080'
 	});
 
-	// esto es para que ajuste el zoom segun los marcadores
+	google.maps.event.addListenerOnce(GeoMarker, 'position_changed',
+			function() {
+				map.setCenter(this.getPosition());
+				map.fitBounds(this.getBounds());
 
-	// var mapBounds = new google.maps.LatLngBounds();
+				latitudActual = this.getPosition().lat();
+				longitudActual = this.getPosition().lng();
+			});
 
-	// mapBounds.extend(latitudeAndLongitudeOne);
-	// mapBounds.extend(latitudeAndLongitudeTwo);
+	google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
+		alert('There was an error obtaining your position. Message: '
+				+ e.message);
+	});
 
-	// map.fitBounds(mapBounds);
+	// addMarkersToMap(map);
+	GeoMarker.setMap(map);
+	$(window).resize(function() {
+		google.maps.event.trigger(map, 'resize');
+
+	});
+
 }
 
 function init() {
 	display();
 }
 
-function mostrarDetalles(detallesDeLaSucursal, mapa, marcador) {
+function mostrarDetallesSucursal(detallesDeLaSucursal, mapa, marcador) {
 
 	var detSuc = '<div id="content">' + '<div id="sucursalInfo">' + '</div>'
 			+ '<h1 id="titulo" class="titulo">Sucursal</h1>'
-			+ '<div id="contenido">' + '<p><b>Sucursal</b>, '
-			+ detallesDeLaSucursal + '</p>' + '</div>' + '</div>';
+			+ '<div id="contenido">' + '<p>' + detallesDeLaSucursal + '</p>'
+			+ '</div>' + '</div>';
 
 	var ventanaMostrar = new google.maps.InfoWindow({
 		content : detSuc
 	});
 	ventanaMostrar.open(mapa, marcador);
+
+}
+
+function cargarMapaSucursalesZona(sucursalesAux) {
+
+	var mapOptions = {
+		zoom : 13,
+		center : new google.maps.LatLng(sucursalesAux[0].Latitud, sucursalesAux[0].Longitud),
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+
+	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+	agregarMarcadoresMapaSucursales(sucursalesAux, map);
+	$(window).resize(function() {
+		google.maps.event.trigger(map, 'resize');
+	});
+
+}
+
+function agregarMarcadoresMapaSucursales(sucursalesAux, mapa1) {
+
+	for (i = 0; i < sucursalesAux.length; i++) {
+		var latitudeAndLongitudeOne = new google.maps.LatLng(
+				sucursalesAux[i].Latitud, sucursalesAux[i].Longitud);
+
+		var marker1 = new google.maps.Marker({
+			position : latitudeAndLongitudeOne,
+			map : mapa1
+		});
+
+		var detalles = "Direccion: " + sucursalesAux[i].Direccion
+				+ "<br/>Horario de Atencion: "
+				+ sucursalesAux[i].HorarioAtencion;
+
+		google.maps.event.addListener(marker1, 'click', function() {
+			mostrarDetallesSucursal(detalles, mapa1, marker1);
+		});
+	}
+}
+
+function cargarMapaSucursalesDistancia(sucursalesAux) {
+
+	var mapOptions = {
+		zoom : 16,
+		center : new google.maps.LatLng(-34.90530797754054, -56.18638873100281),
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+
+	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+	GeoMarker = new GeolocationMarker();
+	GeoMarker.setCircleOptions({
+		fillColor : '#808080'
+	});
+
+	google.maps.event.addListenerOnce(GeoMarker, 'position_changed',
+			function() {
+				map.setCenter(this.getPosition());
+				map.fitBounds(this.getBounds());
+			});
+
+	google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
+		alert('There was an error obtaining your position. Message: '
+				+ e.message);
+	});
+
+	agregarMarcadoresMapaSucursales(sucursalesAux, map);
+	GeoMarker.setMap(map);
+	$(window).resize(function() {
+		google.maps.event.trigger(map, 'resize');
+
+	});
 
 }

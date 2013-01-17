@@ -1,38 +1,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Cajeros</title>
-    </head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Cajeros</title>
+</head>
 <body>
-	<div data-role="page" id="mapaCajeros" data-add-back-btn="true" data-back-btn-text="Atras">		
-            <div data-role="header" data-theme="b" id="hdrMapa" data-nobackbtn="true" >  
+	<div data-role="page" id="mapaCajeros" data-add-back-btn="true"
+		data-back-btn-text="Atras">
+		<div data-role="header" data-theme="b" id="hdrMapa"
+			data-nobackbtn="true">
 			<a href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
-                <h2>Cajeros</h2>  
-            </div>  
-		 <div data-role="content" data-theme="b" id="contentMapaCajeros">  
-                
-                <div id="map_canvasCajeros" style="width: 100%; height:400px;">
-                </div>
-                
-            </div>  
+			<h2>Cajeros</h2>
+		</div>
+		<div data-role="content" data-theme="b" id="contentMapaCajeros">
+			<div id="map_canvasCajeros" style="width: 100%; height: 400px;">
+			</div>
+		</div>
 		<div data-role="footer" data-theme="b" id="ftrMapa"
 			data-position="fixed">
-			<a href="Filtros.html" data-role="button" data-theme="a" data-transition="flow">Filtros</a>
-			<a href="ListadoCajeros.html" data-role="button" data-theme="a" data-transition="flow">Ver
+			<a href="Filtros.html" data-role="button" data-theme="a"
+				data-transition="flow">Filtros</a> <a href="ListadoCajeros.html"
+				data-role="button" data-theme="a" data-transition="flow">Ver
 				Listado</a>
 		</div>
-			  <script>
-$(function(){           
-					$('#mapaCajeros').live('pageshow',function(){
-				//cajeros();
-				initCajeros();   
-				   
-});
-                 
-			});     
-          </script>
+		<script>
+			$(function() {
+				opcionElegida = "cajeros";
+				$('#mapaCajeros').on('pageshow', function() {
+					initCajeros();
+					if (filtro == "10") {
+						traerCajerosPorDistancia(10,
+								GeoMarker.position.Ya,
+								GeoMarker.position.Za);
+					}else if(filtro=="5"){
+						traerCajerosPorDistancia(5,
+								GeoMarker.position.Ya,
+								GeoMarker.position.Za);
+					}else if(filtro=="2"){
+						traerCajerosPorDistancia(2,
+								GeoMarker.position.Ya,
+								GeoMarker.position.Za);
+					}else if(filtro=="zona"){
+						traerCajerosPorZona(idZonaSeleccionada);
+					}else if(filtro=="detalle"){
+						mostrarCajero(datosCajero);
+					}
+				});
+			});
+		</script>
 	</div>
-
 </body>
 </html>
