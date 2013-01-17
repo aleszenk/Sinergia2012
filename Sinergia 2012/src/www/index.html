@@ -18,6 +18,11 @@
 <script type="text/javascript" src="js/database.js"></script>
 <script type="text/javascript" src="js/mapaCajeros.js"></script>
 <script type="text/javascript" src="js/mapaSucursales.js"></script>
+<<<<<<< HEAD
+=======
+<script type="text/javascript" src="js/jMyCarousel.js"></script>
+    <script type="text/javascript" src="js/utilidades.js"></script>
+>>>>>>> branch 'master' of https://github.com/aleszenk/Sinergia2012.git
 <style>
 html,body,#map_canvasCajeros {
 	margin: 0;
@@ -32,7 +37,7 @@ html,body,#map_canvasCajeros {
 </script>
 <title>Sinergia 2012</title>
 </head>
-<body>
+<body onload="onDeviceReady();">
 	<div data-role="page" id="Principal">
 		<div data-role="header" id="hdrPrincipal" data-theme="b"
 			data-nobackbtn="true">
@@ -49,7 +54,7 @@ html,body,#map_canvasCajeros {
 					automáticos</a>
 			</p>
 			<p>
-				<a href="SucursalesMapa.html" data-transition="flow"
+            <a onclick="function(){alert("algo");}" href="SucursalesMapa.html" data-transition="flow"
 					data-role="button">Sucursales</a>
 			</p>
 			<!-- 			Carrousel que carga dinamicamente

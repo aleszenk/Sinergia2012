@@ -23,6 +23,7 @@
 				data-role="button" data-theme="a" data-transition="flow">Ver
 				Listado</a>
 		</div>
+<<<<<<< HEAD
 		<script>
 			$(function() {
 				opcionElegida = "cajeros";
@@ -48,6 +49,41 @@
 				});
 			});
 		</script>
+=======
+			  <script>
+$(function(){           
+					$('#mapaCajeros').live('pageshow',function(){
+                                           
+                                           var indiceInterrogacion=document.URL.indexOf('?');
+                                           var url=document.URL.substring(indiceInterrogacion+1);
+                                           
+                                           var arrayUrl=url.split('=');
+                                           
+                                           
+                                           var filtro;
+                                           var valorFiltro;
+                                           if(arrayUrl!=null){
+                                           filtro = arrayUrl[0];
+                                           valorFiltro = arrayUrl[1];
+                                           }
+                                           
+                                           if(filtro=="id"){
+                                           //llamar metodo con logica de zona
+                                           
+                                           cargarCajerosZona(valorFiltro);
+                                           }else if(filtro=="distancia") {
+                                           
+                                           //llamar metodo con logica de distancia
+                                           metodoDistancia(valorFiltro);
+                                           }else{
+                                           
+                                           initCajeros();
+                                           }	   
+                                        });
+                 
+			});     
+          </script>
+>>>>>>> branch 'master' of https://github.com/aleszenk/Sinergia2012.git
 	</div>
 </body>
 </html>
