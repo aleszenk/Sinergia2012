@@ -59,44 +59,10 @@
 					</label>
 				</div>
 			</div>
-<<<<<<< HEAD
 			<div style="text-align: center;">
 				<a href="#" id="botonAceptar" data-role="button"
 					data-transition="flow" class="ui-btn-left">Aceptar</a>
-=======
-            <div data-role="content" style="padding: 0px ">
-					<div class="ui-controlgroup-controls">	
-						<div class="ui-radio">
-							<input type="radio" checked="checked" value="choice-1" id="radio-choice-1-a" name="radio-choice-a"/>
-							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-1-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Sin Filtro</span></span>
-							</label>
-						</div>
-						<div class="ui-radio">
-							<input type="radio" value="choice-2" id="radio-choice-2-a" name="radio-choice-a"/>
-							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-2-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Distancia Menor 2km</span></span>
-							</label>
-						</div>
-						<div class="ui-radio">
-							<input type="radio" value="choice-3" id="radio-choice-3-a" name="radio-choice-a"/>
-							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-3-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Distancia Menor 5km</span></span>
-							</label>
-						</div>					
-						<div class="ui-radio">
-							<input type="radio" value="choice-4" id="radio-choice-4-a" name="radio-choice-a"/>
-							<label class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a" data-form="ui-btn-up-a" for="radio-choice-4-a" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="a">
-								<span class="ui-btn-inner"><span class="ui-btn-text">Por Ciudad</span></span>
-							</label>
-						</div>
-					</div>
-					<div style="text-align:center;">
-						<a href="#" id="botonAceptar" data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a>
-					</div>		
->>>>>>> branch 'master' of https://github.com/aleszenk/Sinergia2012.git
 			</div>
-<<<<<<< HEAD
 		</div>
 		<script>
 			//App custom javascript	
@@ -106,32 +72,6 @@
 						$("#botonAceptar").attr("href", "CajerosMapa.html");
 					} else {
 						$("#botonAceptar").attr("href", "SucursalesMapa.html");
-=======
-			<script>
-				//App custom javascript	
-				$('input').click(function(evt)
-				{
-					if($("#radio-choice-4-a").is(":checked"))
-					{
-						$("#botonAceptar").attr("href","FiltroDepartamentos.html");
-					}else{
-                                 if($("#radio-choice-2-a").is(":checked"))
-                                 {
-                                 
-                                 //distancia 2km
-                                    $("#botonAceptar").attr("href","SucursalesMapa.html?distancia=2000");
-                                 }else if($("#radio-choice-3-a").is(":checked"))
-                                 {
-                                 //distancia 5km
-                                 
-                                    $("#botonAceptar").attr("href","SucursalesMapa.html?distancia=5000");
-                                 
-                                 }else{
-						//utilizar el filtro elegido y navegar a la pagina del mapa.
-                                 
-                                    $("#botonAceptar").attr("href","SucursalesMapa.html");
-                                 }
->>>>>>> branch 'master' of https://github.com/aleszenk/Sinergia2012.git
 					}
 				});
 			});

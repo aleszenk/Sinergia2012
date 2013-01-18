@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<<<<<<< HEAD
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Ciudad</title>
@@ -18,20 +17,7 @@
 			<div style="text-align: center;">
 				<a  href="FiltroZona.html" id="botonAceptar"
 					data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a>
-=======
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Ciudad</title>
-    </head>
-    <body>
-        <div data-role="page" id="ciudades">
-            <div data-role="header" data-theme="b" id="hdrMapa" data-nobackbtn="false">
-				<a href="FiltroDepartamentos.html" data-icon="arrow-l" data-theme="a">Atras</a>
-				<h2>Ciudad</h2>
-				<a data-role="button" href="index.html" class="ui-btn-right">Inicio</a>
->>>>>>> branch 'master' of https://github.com/aleszenk/Sinergia2012.git
 			</div>
-<<<<<<< HEAD
 			<input id="selectedID" type="hidden" name="country" value="">
 		</div>
 		<script>
@@ -43,40 +29,4 @@
 		</script>
 	</div>
 </body>
-=======
-            <div data-role="content" style="padding: 0px ">
-				<div id="contenedor" class="ui-controlgroup-controls"></div>
-				<div style="text-align:center;">
-					<a onclick="irZonas();" href="FiltroZona.html" id="botonAceptar" data-role="button" data-transition="flow" class="ui-btn-left">Aceptar</a>
-				</div>	
-				<input id="selectedID" type="hidden" name="country" value="">
-			</div>
-			<script>
-				$(function(){
-					$('#ciudades').live('pageshow',function()
-					{
-						var arrayUrl = document.URL.split('=');
-						var idDpto = arrayUrl[1];
-						ciudadesPorDepartamento(idDpto);
-					});
-				});
-				
-				function irZonas()
-				{
-					//en el value del hidden input almaceno el id seleccionado
-					hiddenInput = document.getElementById('selectedID');
-					idCiudad = hiddenInput.getAttribute('value');
-					if(idCiudad != '')
-					{
-						$("#botonAceptar").attr("href","FiltroZona.html?id=" + idCiudad);
-					}
-					else
-					{
-						alert('DEBE SELECCIONAR UNA CIUDAD');
-					}
-				}
-			</script>
-		</div>	
-    </body>
->>>>>>> branch 'master' of https://github.com/aleszenk/Sinergia2012.git
 </html>

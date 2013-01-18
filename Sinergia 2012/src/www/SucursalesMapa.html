@@ -16,7 +16,6 @@
 		</div>
 		<div data-role="footer" data-theme="b" id="ftrMapa"
 			data-position="fixed">
-<<<<<<< HEAD
 			<a href="Filtros.html" data-role="button" data-theme="a"
 				data-transition="flow">Filtros</a> <a href="ListadoSucursales.html"
 				data-role="button" data-theme="a" data-transition="flow">Ver
@@ -49,48 +48,6 @@
 						});
 			});
 		</script>
-=======
-			<a href="Filtros.html" data-role="button" data-theme="a" data-transition="flow">Filtros</a>
-			<a href="ListadoSucursales.html" data-role="button" data-theme="a" data-transition="flow">Ver Listado</a>
-		</div>	
-		  <script>
-			$(function(){
-				$('#mapaSucursales').live('pageshow',function(){      
-	
-                                          
-                                          
-                        var indiceInterrogacion=document.URL.indexOf('?');
-                        var url=document.URL.substring(indiceInterrogacion+1);
-                                          
-                        var arrayUrl=url.split('=');
-                                          
-                                          
-						var filtro;
-						var valorFiltro;
-						if(arrayUrl!=null){
-						   filtro = arrayUrl[0];
-						   valorFiltro = arrayUrl[1];
-						}
-                                          
-                        
-                         
-						if(filtro=="id"){
-							//llamar metodo con logica de zona
-                            
-							cargarSucursalesZona(valorFiltro);
-						}else if(filtro=="distancia") {
-                                          
-							//llamar metodo con logica de distancia
-                            alert('por distancia: '+valorFiltro);
-							cargarSucursalesDistancia(valorFiltro);
-						}else{
-                                          
-							init();  
-						}			   
-				});                 
-			});     
-          </script>
->>>>>>> branch 'master' of https://github.com/aleszenk/Sinergia2012.git
 	</div>
 </body>
 </html>
