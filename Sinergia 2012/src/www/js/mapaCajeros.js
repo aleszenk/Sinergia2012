@@ -1,6 +1,9 @@
 var map, userPosition;
 var GeoMarker;
 var latitudActual, longitudActual, bounds;
+
+var ventanaMostrarCajeros = new google.maps.InfoWindow();
+
 function displayCajeros() {
 
 	var mapOptions = {
@@ -57,15 +60,16 @@ function initCajeros() {
 	displayCajeros();
 }
 
-function mostrarDetallesCajero(detallesDelCajero, mapa, marcador) {
-	var detSuc = '<div id="content">' + '<div id="sucursalInfo">' + '</div>'
+function mostrarDetallesCajero(detallesDelCajero, mapa, marcador,idCajero) {
+	var detCajero = '<div id="content">' + '<div id="sucursalInfo">' + '</div>'
 			+ '<h1 id="titulo" class="titulo">Cajero</h1>'
 			+ '<div id="contenido">' + '<p> ' + detallesDelCajero + '</p>'
+            + '<a href=Cajero.html?id='+idCajero+'>Ficha</a>'
 			+ '</div>' + '</div>';
-	var ventanaMostrar = new google.maps.InfoWindow({
-		content : detSuc
-	});
-	ventanaMostrar.open(mapa, marcador);
+	
+	ventanaMostrarCajeros.close();
+    ventanaMostrarCajeros.setContent(detCajero);
+	ventanaMostrarCajeros.open(mapa, marcador);
 }
 
 function cargarMapaCajerosZona(cajerosAux) {
@@ -98,13 +102,22 @@ function agregarMarcadoresMapaCajeros(cajerosAux, mapa1) {
 		bounds.extend(latitudeAndLongitudeOne);
 		var detalles = "Direccion: " + cajerosAux[i].Direccion
 				+ "<br/>Horario de Atencion: " + cajerosAux[i].HorarioAtencion;
-		google.maps.event.addListener(marker1, 'click', function() {
-			mostrarDetallesCajero(detalles, mapa1, marker1);
-		});
+        var idcajero=cajerosAux[i].id;
+
+        insertarEventoClickCajero(marker1,detalles,mapa1,idcajero);
 	}
 
 	mapa1.fitBounds(bounds);
 }
+
+function insertarEventoClickCajero(marker,detalles,mapa,idcajero){
+    
+    google.maps.event.addListener(marker, 'click', function() {
+                                  mostrarDetallesCajero(detalles, mapa, marker,idcajero);
+                                  });
+}
+
+
 function agregarMarcadoresMapaCajerosDistancia(cajerosAux) {
 	bounds = new google.maps.LatLngBounds();
 //	bounds.extend( new google.maps.LatLng(-34.894,-56.178));
@@ -120,9 +133,9 @@ function agregarMarcadoresMapaCajerosDistancia(cajerosAux) {
 		bounds.extend(latitudeAndLongitudeOne);
 		var detalles = "Direccion: " + cajerosAux[i].Direccion
 				+ "<br/>Horario de Atencion: " + cajerosAux[i].HorarioAtencion;
-		google.maps.event.addListener(marker1, 'click', function() {
-			mostrarDetallesCajero(detalles, map, marker1);
-		});
+        var idcajero=cajerosAux[i].id;
+
+        insertarEventoClickCajero(marker1,detalles,map,idcajero);
 	}
 	
 }
@@ -145,9 +158,9 @@ function mostrarCajero(cajero) {
 	});
 	var detalles = "Direccion: " + cajero.Direccion
 			+ "<br/>Horario de Atencion: " + cajero.HorarioAtencion;
-
+    var idcajero=cajerosAux[i].id;
 	google.maps.event.addListener(marker1, 'click', function() {
-		mostrarDetallesCajero(detalles, map, marker1);
+		mostrarDetallesCajero(detalles, map, marker1,idcajero);
 	});
 	$(window).resize(function() {
 		google.maps.event.trigger(map, 'resize');

@@ -12,23 +12,15 @@
 			<h2>Departamentos</h2>
 			<a data-role="button" href="index.html" class="ui-btn-right">Inicio</a>
 		</div>
-		<div data-role="content" style="padding: 0px">
-			<div id="contenedor" class="ui-controlgroup-controls"></div>
-			<div id="radioContainer" style="text-align: center;">
-				<a href="FiltroCiudad.html"
-					id="botonAceptar" data-role="button" data-transition="flow"
-					class="ui-btn-left">Aceptar</a>
-			</div>
-			<input id="selectedID" type="hidden" name="country" value="">
+		<div data-role="content">
+			<ul id="ulDptos" class="ulDptosClass" data-role="listview" data-divider-theme="b" data-inset="false"></ul>            
 		</div>
 		<script>
 			$(function() {
 				$('#departamentos').on('pageshow', function() {
 					traerDepartamentos();		
 				});	
-			});
-			
-		
+			});		
 		</script>
 	</div>
 </body>

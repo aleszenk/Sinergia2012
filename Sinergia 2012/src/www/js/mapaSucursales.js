@@ -6,6 +6,8 @@ var map, GeoMarker;
 
 var latitudActual, longitudActual;
 
+var ventanaMostrar = new google.maps.InfoWindow();
+
 function mostrarSucursal(sucursal) {
 	var mapOptions = {
 		zoom : 13,
@@ -72,16 +74,19 @@ function init() {
 	display();
 }
 
-function mostrarDetallesSucursal(detallesDeLaSucursal, mapa, marcador) {
+function mostrarDetallesSucursal(detallesDeLaSucursal, mapa, marcador,idSucursal) {
 
 	var detSuc = '<div id="content">' + '<div id="sucursalInfo">' + '</div>'
 			+ '<h1 id="titulo" class="titulo">Sucursal</h1>'
 			+ '<div id="contenido">' + '<p>' + detallesDeLaSucursal + '</p>'
+            + '<a href=Sucursal.html?id='+idSucursal+'>Ficha</a>'
 			+ '</div>' + '</div>';
 
-	var ventanaMostrar = new google.maps.InfoWindow({
-		content : detSuc
-	});
+//	var ventanaMostrar = new google.maps.InfoWindow({
+//		content : detSuc
+//	});
+    ventanaMostrar.close();
+    ventanaMostrar.setContent(detSuc);
 	ventanaMostrar.open(mapa, marcador);
 
 }
@@ -120,9 +125,9 @@ function agregarMarcadoresMapaSucursales(sucursalesAux, mapa1) {
 				+ "<br/>Horario de Atencion: "
 				+ sucursalesAux[i].HorarioAtencion;
 
-		google.maps.event.addListener(marker1, 'click', function() {
-			mostrarDetallesSucursal(detalles, mapa1, marker1);
-		});
+		var idSucursal=sucursalesAux[i].id;
+        
+        insertarEventoClick(marker1,detalles,mapa1,idSucursal);
 	}
 	mapa1.fitBounds(bounds);
 }
@@ -142,11 +147,19 @@ function agregarMarcadoresMapaSucursalesDistancia(sucursalesAux, map) {
 				+ "<br/>Horario de Atencion: "
 				+ sucursalesAux[i].HorarioAtencion;
 
-		google.maps.event.addListener(marker1, 'click', function() {
-			mostrarDetallesSucursal(detalles, map, marker1);
-		});
+
+        var idSucursal=sucursalesAux[i].id;
+        insertarEventoClick(marker1,detalles,map,idSucursal);
 	}
 }
+
+function insertarEventoClick(marker,detalles,mapa,idSucursal){
+    
+    google.maps.event.addListener(marker, 'click', function() {
+                                  mostrarDetallesSucursal(detalles, mapa, marker,idSucursal);
+                                  });
+}
+
 function cargarMapaSucursalesDistancia(sucursalesAux) {
 
 	var mapOptions = {

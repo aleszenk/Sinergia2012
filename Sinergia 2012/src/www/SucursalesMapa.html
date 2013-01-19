@@ -28,18 +28,31 @@
 						'pageshow',
 						function() {
 							init();
+                                        var puntoAux=new google.maps.LatLng(-34.90530797754054, -56.18638873100281);
+                                        var latAux=puntoAux.lat();
+                                        var longAux=puntoAux.lng();
+                                        
 							if (filtro == "10") {
-								traerSucursalesPorDistancia(10,
-										GeoMarker.position.Ya,
-										GeoMarker.position.Za);
+//								traerSucursalesPorDistancia(10,
+//										GeoMarker.position.Ya,
+//										GeoMarker.position.Za);
+                                        traerSucursalesPorDistancia(10,
+                                                                    latAux,
+                                                                    longAux);
 							} else if (filtro == "5") {
-								traerSucursalesPorDistancia(5,
-										GeoMarker.position.Ya,
-										GeoMarker.position.Za);
+//								traerSucursalesPorDistancia(5,
+//										GeoMarker.position.Ya,
+//										GeoMarker.position.Za);
+                                        traerSucursalesPorDistancia(5,
+                                                                    latAux,
+                                                                    longAux);
 							} else if (filtro == "2") {
-								traerSucursalesPorDistancia(2,
-										GeoMarker.position.Ya,
-										GeoMarker.position.Za);
+//								traerSucursalesPorDistancia(2,
+//										GeoMarker.position.Ya,
+//										GeoMarker.position.Za);
+                                        traerSucursalesPorDistancia(2,
+                                                                    latAux,
+                                                                    longAux);
 							} else if (filtro == "zona") {
 								traerSucursalesPorZona(idZonaSeleccionada);
 							}else if(filtro=="detalle"){
