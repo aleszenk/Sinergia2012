@@ -8,16 +8,16 @@
 	<div data-role="page" id="mapaSucursales">
 		<div data-role="header" data-theme="b" id="hdrMapa"
 			data-nobackbtn="false">
-			<a href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
+			<a class="backWidth" href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
 			<h2>Sucursales</h2>
 		</div>
 		<div data-role="content" data-theme="b" id="contentMapa">
 			<div id="map_canvas" style="width: 100%; height: 400px"></div>
 		</div>
-		<div data-role="footer" data-theme="b" id="ftrMapa"
+		<div  data-role="footer" data-theme="b" id="ftrMapa"
 			data-position="fixed">
-			<a href="Filtros.html" data-role="button" data-theme="a"
-				data-transition="flow">Filtros</a> <a href="ListadoSucursales.html"
+			<a style="display:block;" href="Filtros.html" data-role="button" data-theme="a"
+				data-transition="flow">Filtros</a> <a style="display:block;" href="ListadoSucursales.html"
 				data-role="button" data-theme="a" data-transition="flow">Ver
 				Listado</a>
 		</div>
@@ -27,37 +27,46 @@
 				$('#mapaSucursales').on(
 						'pageshow',
 						function() {
+                        if(!hayConexion()){
+                                        alert('no hay conexion');
+                                        $.mobile.changePage("ListadoSucursales.html");
+                            
+                        }else{
+                                        alert(ultimaFechaSincronizacion);
 							init();
-                                        var puntoAux=new google.maps.LatLng(-34.90530797754054, -56.18638873100281);
-                                        var latAux=puntoAux.lat();
-                                        var longAux=puntoAux.lng();
+                                         var puntoAux=new google.maps.LatLng(-34.90530797754054, -56.18638873100281);
+                                         var latAux=puntoAux.lat();
+                                         var longAux=puntoAux.lng();
                                         
 							if (filtro == "10") {
 //								traerSucursalesPorDistancia(10,
 //										GeoMarker.position.Ya,
 //										GeoMarker.position.Za);
-                                        traerSucursalesPorDistancia(10,
-                                                                    latAux,
-                                                                    longAux);
+                                         traerSucursalesPorDistancia(10,
+                                                                     latAux,
+                                                                     longAux);
 							} else if (filtro == "5") {
 //								traerSucursalesPorDistancia(5,
 //										GeoMarker.position.Ya,
 //										GeoMarker.position.Za);
-                                        traerSucursalesPorDistancia(5,
-                                                                    latAux,
-                                                                    longAux);
+                                         traerSucursalesPorDistancia(5,
+                                                                     latAux,
+                                                                     longAux);
 							} else if (filtro == "2") {
 //								traerSucursalesPorDistancia(2,
 //										GeoMarker.position.Ya,
 //										GeoMarker.position.Za);
-                                        traerSucursalesPorDistancia(2,
-                                                                    latAux,
-                                                                    longAux);
+                                         traerSucursalesPorDistancia(2,
+                                                                     latAux,
+                                                                     longAux);
 							} else if (filtro == "zona") {
-								traerSucursalesPorZona(idZonaSeleccionada);
+								var arrayUrl = document.URL.split('=');
+								var idZona = arrayUrl[1];
+								traerSucursalesPorZona(idZona);
 							}else if(filtro=="detalle"){
 								mostrarSucursal(datosSucursal);
 							}
+                        }
 						});
 			});
 		</script>

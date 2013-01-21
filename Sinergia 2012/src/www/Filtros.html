@@ -8,91 +8,88 @@
 	<div data-role="page" id="filtros">
 		<div data-role="header" data-theme="b" id="hdrMapa"
 			data-nobackbtn="false">
-			<a href="SucursalesMapa.html" data-icon="arrow-l" data-theme="a">Atras</a>
+			<a class="backWidth" href="SucursalesMapa.html" data-icon="arrow-l" data-theme="a">Atras</a>
 			<h2>Filtros</h2>
 			<a data-role="button" href="index.html" class="ui-btn-right">Inicio</a>
 		</div>
-		<div data-role="content" style="padding: 0px">
-			<div class="ui-controlgroup-controls">
-				<div class="ui-radio">
-					<input type="radio" checked="checked" value="choice-1"
-						id="radio-choice-1-a" name="radio-choice-a"> <label
-						class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a"
-						data-form="ui-btn-up-a" for="radio-choice-1-a" data-corners="true"
-						data-shadow="false" data-iconshadow="true" data-wrapperels="span"
-						data-icon="radio-off" data-theme="a"> <span
-							class="ui-btn-inner"><span class="ui-btn-text">Sin
-									Filtro</span></span>
-					</label>
-				</div>
-				<div class="ui-radio">
-					<input type="radio" value="choice-2" id="radio-choice-2-a"
-						name="radio-choice-a"> <label
-						class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a"
-						data-form="ui-btn-up-a" for="radio-choice-2-a" data-corners="true"
-						data-shadow="false" data-iconshadow="true" data-wrapperels="span"
-						data-icon="radio-off" data-theme="a"> <span
-							class="ui-btn-inner"><span class="ui-btn-text">Distancia
-									Menor 2km</span></span>
-					</label>
-				</div>
-				<div class="ui-radio">
-					<input type="radio" value="choice-3" id="radio-choice-3-a"
-						name="radio-choice-a"> <label
-						class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a"
-						data-form="ui-btn-up-a" for="radio-choice-3-a" data-corners="true"
-						data-shadow="false" data-iconshadow="true" data-wrapperels="span"
-						data-icon="radio-off" data-theme="a"> <span
-							class="ui-btn-inner"><span class="ui-btn-text">Distancia
-									Menor 5km</span></span>
-					</label>
-				</div>
-				<div class="ui-radio">
-					<input type="radio" value="choice-4" id="radio-choice-4-a"
-						name="radio-choice-a"> <label
-						class="ui-corner-none ui-btn ui-btn-icon-left ui-radio-on ui-btn-up-a"
-						data-form="ui-btn-up-a" for="radio-choice-4-a" data-corners="true"
-						data-shadow="false" data-iconshadow="true" data-wrapperels="span"
-						data-icon="radio-off" data-theme="a"> <span
-							class="ui-btn-inner"><span class="ui-btn-text">Por
-									Ciudad</span></span>
-					</label>
-				</div>
-			</div>
-			<div style="text-align: center;">
-				<a href="#" id="botonAceptar" data-role="button"
-					data-transition="flow" class="ui-btn-left">Aceptar</a>
-			</div>
+		<div data-role="content" class="ui-content" role="main">
+			<ul id="ulFiltros" data-role="listview" data-divider-theme="b"
+				data-inset="false" class="ui-listview">
+				<li style="padding: 0px" data-theme="a"
+					class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-last ui-btn-up-a"
+					data-corners="false" data-shadow="false" data-iconshadow="true"
+					data-wrapperels="div" data-icon="arrow-r" data-iconpos="right"><div
+						class="ui-btn-inner ui-li">
+						<div class="ui-btn-text">
+							<a id="sinFiltro" data-transition="slide"
+								class="claseFiltro ui-link-inherit" href="Sucursal.html?id=2">Sin
+								Filtro </a>
+						</div>
+						<span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+					</div></li>
+				<li style="padding: 0px" data-theme="a"
+					class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-last ui-btn-up-a"
+					data-corners="false" data-shadow="false" data-iconshadow="true"
+					data-wrapperels="div" data-icon="arrow-r" data-iconpos="right"><div
+						class="ui-btn-inner ui-li">
+						<div class="ui-btn-text">
+							<a id="2km" data-transition="slide"
+								class="claseFiltro ui-link-inherit" href="#">Distancia Menor
+								2KM</a>
+						</div>
+						<span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+					</div></li>
+				<li style="padding: 0px" data-theme="a"
+					class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-last ui-btn-up-a"
+					data-corners="false" data-shadow="false" data-iconshadow="true"
+					data-wrapperels="div" data-icon="arrow-r" data-iconpos="right"><div
+						class="ui-btn-inner ui-li">
+						<div class="ui-btn-text">
+							<a id="5km" data-transition="slide"
+								class="claseFiltro ui-link-inherit" href="#">Distancia Menor
+								5KM</a>
+						</div>
+						<span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+					</div></li>
+				<li style="padding: 0px" data-theme="a"
+					class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-last ui-btn-up-a"
+					data-corners="false" data-shadow="false" data-iconshadow="true"
+					data-wrapperels="div" data-icon="arrow-r" data-iconpos="right"><div
+						class="ui-btn-inner ui-li">
+						<div class="ui-btn-text">
+							<a id="ciudad" data-transition="slide"
+								class="claseFiltro ui-link-inherit" href="#">Ciudad</a>
+						</div>
+						<span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+					</div></li>
+			</ul>
 		</div>
 		<script>
-			//App custom javascript	
 			$(function() {
 				$('#filtros').on('pageshow', function() {
 					if (opcionElegida == "cajeros") {
-						$("#botonAceptar").attr("href", "CajerosMapa.html");
+						$(".claseFiltro").attr("href", "CajerosMapa.html");
 					} else {
-						$("#botonAceptar").attr("href", "SucursalesMapa.html");
+						$(".claseFiltro").attr("href", "SucursalesMapa.html");
 					}
 				});
 			});
-			$('input').click(
-					function(evt) {
-						if ($("#radio-choice-4-a").is(":checked")) {
-							$("#botonAceptar").attr("href",
-									"FiltroDepartamentos.html");
-						} else {
-							if ($("#radio-choice-2-a").is(":checked")) {
-								//distancia 2km
-								filtro="2";
-							} else if ($("#radio-choice-3-a").is(":checked")) {
-								//distancia 5km
-								filtro="5";
-							} else {
-								//utilizar el filtro elegido y navegar a la pagina del mapa.
-								filtro="10";
-							}
-						}
-					});
+			$('a').click(function(evt) {
+				if ($(this).attr("id")=="ciudad") {
+					$(".claseFiltro").attr("href", "FiltroDepartamentos.html");
+				} else {
+					if ($(this).attr("id")=="2km") {
+						//distancia 2km
+						filtro = "2";
+					} else if ($(this).attr("id")=="5km") {
+						//distancia 5km
+						filtro = "5";
+					} else if ($(this).attr("id")=="sinFiltro") {						
+						//utilizar el filtro elegido y navegar a la pagina del mapa.
+						filtro = "10";
+					}
+				}
+			});
 		</script>
 	</div>
 </body>

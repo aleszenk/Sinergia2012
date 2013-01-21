@@ -8,7 +8,7 @@
 	<div data-role="page" id="ciudades">
 		<div data-role="header" data-theme="b" id="hdrMapa"
 			data-nobackbtn="false">
-			<a href="FiltroDepartamentos.html" data-icon="arrow-l" data-theme="a">Atras</a>
+			<a class="backWidth" href="FiltroDepartamentos.html" data-icon="arrow-l" data-theme="a">Atras</a>
 			<h2>Ciudad</h2>
 			<a data-role="button" href="index.html" class="ui-btn-right">Inicio</a>
 		</div>
@@ -17,8 +17,10 @@
 		</div>
 		<script>
 			$(function() {
-				$('#ciudades').on('pageshow', function() {					
-					ciudadesPorDepartamento();
+				$('#ciudades').on('pageshow', function() {		
+					var arrayUrl = document.URL.split('=');
+					var idDpto = arrayUrl[1];
+					ciudadesPorDepartamento(idDpto);
 				});
 			});	
 		</script>

@@ -9,7 +9,7 @@
 		data-back-btn-text="Atras">
 		<div data-role="header" data-theme="b" id="hdrMapa"
 			data-nobackbtn="true">
-			<a href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
+			<a class="backWidth" href="index.html" data-icon="arrow-l" data-theme="a">Atras</a>
 			<h2>Cajeros</h2>
 		</div>
 		<div data-role="content" data-theme="b" id="contentMapaCajeros">
@@ -18,47 +18,57 @@
 		</div>
 		<div data-role="footer" data-theme="b" id="ftrMapa"
 			data-position="fixed">
-			<a href="Filtros.html" data-role="button" data-theme="a"
-				data-transition="flow">Filtros</a> <a href="ListadoCajeros.html"
+			<a style="display:block;" href="Filtros.html" data-role="button" data-theme="a"
+				data-transition="flow">Filtros</a> <a style="display:block;" href="ListadoCajeros.html"
 				data-role="button" data-theme="a" data-transition="flow">Ver
 				Listado</a>
 		</div>
 		<script>
-			$(function() {
-              
-              var puntoAux=new google.maps.LatLng(-34.90530797754054, -56.18638873100281);
-              var latAux=puntoAux.lat();
-              var longAux=puntoAux.lng();
-              
+			$(function() {              
 				opcionElegida = "cajeros";
 				$('#mapaCajeros').on('pageshow', function() {
+                    if(!hayConexion()){
+                     alert('no hay conexion');
+                        $.mobile.changePage("ListadoCajeros.html");
+                                   
+                    }else{
+                                     
+                    var puntoAux=new google.maps.LatLng(-34.90530797754054, -56.18638873100281);
+                    var latAux=puntoAux.lat();
+                    var longAux=puntoAux.lng();
 					initCajeros();
+                                     
+                                     
+                                     
 					if (filtro == "10") {
 //						traerCajerosPorDistancia(10,
 //								GeoMarker.position.Ya,
 //								GeoMarker.position.Za);
-                                     traerCajerosPorDistancia(10,
-                                                                 latAux,
-                                                                 longAux);
+                                      traerCajerosPorDistancia(10,
+                                                                  latAux,
+                                                                  longAux);
 					}else if(filtro=="5"){
 //						traerCajerosPorDistancia(5,
 //								GeoMarker.position.Ya,
 //								GeoMarker.position.Za);
-                                     traerCajerosPorDistancia(5,
-                                                              latAux,
-                                                              longAux);
+                                      traerCajerosPorDistancia(5,
+                                                               latAux,
+                                                               longAux);
 					}else if(filtro=="2"){
 //						traerCajerosPorDistancia(2,
 //								GeoMarker.position.Ya,
 //								GeoMarker.position.Za);
-                                     traerCajerosPorDistancia(2,
-                                                              latAux,
-                                                              longAux);
+                                      traerCajerosPorDistancia(2,
+                                                               latAux,
+                                                               longAux);
 					}else if(filtro=="zona"){
-						traerCajerosPorZona(idZonaSeleccionada);
+						var arrayUrl = document.URL.split('=');
+						var idZona = arrayUrl[1];
+						traerCajerosPorZona(idZona);
 					}else if(filtro=="detalle"){
 						mostrarCajero(datosCajero);
 					}
+                }
 				});
 			});
 		</script>

@@ -4,7 +4,7 @@
 
 var map, GeoMarker;
 
-var latitudActual, longitudActual;
+var bounds;
 
 var ventanaMostrar = new google.maps.InfoWindow();
 
@@ -25,9 +25,9 @@ function mostrarSucursal(sucursal) {
 	});
 	var detalles = "Direccion: " + sucursal.Direccion
 			+ "<br/>Horario de Atencion: " + sucursal.HorarioAtencion;
-
+	var idsucursal = sucursal.id;
 	google.maps.event.addListener(marker1, 'click', function() {
-		mostrarDetallesSucursal(detalles, map, marker1);
+		mostrarDetallesSucursal(detalles, map, marker1,idsucursal);
 	});
 	$(window).resize(function() {
 		google.maps.event.trigger(map, 'resize');
@@ -51,10 +51,7 @@ function display() {
 	google.maps.event.addListenerOnce(GeoMarker, 'position_changed',
 			function() {
 				map.setCenter(this.getPosition());
-				map.fitBounds(this.getBounds());
-
-				latitudActual = this.getPosition().lat();
-				longitudActual = this.getPosition().lng();
+				map.fitBounds(this.getBounds());		
 			});
 
 	google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
@@ -79,12 +76,9 @@ function mostrarDetallesSucursal(detallesDeLaSucursal, mapa, marcador,idSucursal
 	var detSuc = '<div id="content">' + '<div id="sucursalInfo">' + '</div>'
 			+ '<h1 id="titulo" class="titulo">Sucursal</h1>'
 			+ '<div id="contenido">' + '<p>' + detallesDeLaSucursal + '</p>'
-            + '<a href=Sucursal.html?id='+idSucursal+'>Ficha</a>'
+            + '<a href=Sucursal.html?id='+idSucursal+'><img src="img/home.png" /></a>Ver'
 			+ '</div>' + '</div>';
 
-//	var ventanaMostrar = new google.maps.InfoWindow({
-//		content : detSuc
-//	});
     ventanaMostrar.close();
     ventanaMostrar.setContent(detSuc);
 	ventanaMostrar.open(mapa, marcador);
@@ -109,8 +103,7 @@ function cargarMapaSucursalesZona(sucursalesAux) {
 }
 
 function agregarMarcadoresMapaSucursales(sucursalesAux, mapa1) {
-	var bounds = new google.maps.LatLngBounds();
-	//bounds.extend(new google.maps.LatLng(latitudActual,longitudActual));
+	bounds = new google.maps.LatLngBounds();
 	for (i = 0; i < sucursalesAux.length; i++) {
 		var latitudeAndLongitudeOne = new google.maps.LatLng(
 				sucursalesAux[i].Latitud, sucursalesAux[i].Longitud);
@@ -132,7 +125,7 @@ function agregarMarcadoresMapaSucursales(sucursalesAux, mapa1) {
 	mapa1.fitBounds(bounds);
 }
 function agregarMarcadoresMapaSucursalesDistancia(sucursalesAux, map) {
-	var bounds = new google.maps.LatLngBounds();
+	bounds = new google.maps.LatLngBounds();
 	for (i = 0; i < sucursalesAux.length; i++) {
 		var latitudeAndLongitudeOne = new google.maps.LatLng(
 				sucursalesAux[i].Latitud, sucursalesAux[i].Longitud);

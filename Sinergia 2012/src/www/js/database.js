@@ -13,50 +13,107 @@ var db;
 var opcionElegida;
 var filtro = "10";
 
-var rutaServicio="http://192.168.1.34/Sinergia2012/ServicioSinergia.svc";
+var rutaServicio = "http://localhost/Sinergia2012/ServicioSinergia.svc";
+
+var ultimaFechaSincronizacion=null;
+
+function sincronizarConServicio(){
+    if(hayConexion()){
+        llamarServicioDepartamentosCiudadesZonas(db);
+        llamarServicioCajeros(db);
+        llamarServicioSucursales(db);
+        llamarServicioImagenes(db);
+    
+        actualizarFechaSincronizacion();
+    }
+}
+
+function actualizarFechaSincronizacion(){
+    db.transaction(function(tx) {
+    var fecha = new Date();
+    if(ultimaFechaSincronizacion==null){
+        tx.executeSql("insert into ACTUALIZACION(id,FechaUltimaActualizacion) values(?,?)",[1,fecha.getTime()]);
+    }else{
+       tx.executeSql("update ACTUALIZACION set FechaUltimaActualizacion=? where id=?",[fecha.getTime(),1]);
+    }
+                   
+    }, errorCB, function() {
+                   ultimaFechaSincronizacion=new Date();
+                   });
+    
+
+}
+
+function cargarUltimaFechaSincronizacion() {
+    db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+	db.transaction(function(tx) {
+                   tx.executeSql('SELECT * FROM ACTUALIZACION', [],
+                                 function(tx, results) {
+                                 
+                                 var len = results.rows.length;
+                                 
+                                 var fechaRetorno=new Date();
+                                 
+                                 if (len != 0) {
+                                 
+                                 alert('estoy en if');
+                                 
+                                 var obj = results.rows.item(0);
+                                 
+                                 fechaRetorno.setTime(obj.FechaUltimaActualizacion);
+                                 
+                                 
+                                 
+                                 ultimaFechaSincronizacion= fechaRetorno;
+                                 
+                                 onDeviceReady();
+                                 
+                                 
+                                 }else{
+                                 ultimaFechaSincronizacion= null;
+                                 onDeviceReady();
+                                 }
+                                 
+                                 
+                                 });
+                   
+                   },function(){
+                   onDeviceReady();
+                   },function(){});
+    
+}
 
 function llamarServicioDepartamentosCiudadesZonas(db) {
-	$
-			.getJSON(
-					rutaServicio+"/Departamentos?callback=?",
-					null, function(departamentosResult) {
-						departamentos = departamentosResult;
-						db.transaction(addDepartamentosCiudadesZonas, errorCB,
-								successAddDepartamentosCiudadesZonas);
-					});
+	$.getJSON(rutaServicio + "/Departamentos?callback=?", null, function(
+			departamentosResult) {
+		departamentos = departamentosResult;
+		db.transaction(addDepartamentosCiudadesZonas, errorCB,
+				successAddDepartamentosCiudadesZonas);
+	});
 }
 
 function llamarServicioCajeros(db) {
-	$
-			.getJSON(
-					rutaServicio+"/Cajeros?callback=?",
-					null, function(cajerosResult) {
-						cajeros = cajerosResult;
-						db.transaction(addCajeros, errorCB, successAddCajeros);
-					});
+	$.getJSON(rutaServicio + "/Cajeros?callback=?", null, function(
+			cajerosResult) {
+		cajeros = cajerosResult;
+		db.transaction(addCajeros, errorCB, successAddCajeros);
+	});
 }
 
 function llamarServicioSucursales(db) {
-	$
-			.getJSON(
-					rutaServicio+"/Sucursales?callback=?",
-					null, function(sucursalesResult) {
-						sucursales = sucursalesResult;
-						db.transaction(addSucursales, errorCB,
-								successAddSucursales);
-					});
+	$.getJSON(rutaServicio + "/Sucursales?callback=?", null, function(
+			sucursalesResult) {
+		sucursales = sucursalesResult;
+		db.transaction(addSucursales, errorCB, successAddSucursales);
+	});
 }
 
 function llamarServicioImagenes(db) {
-	$
-			.getJSON(
-					rutaServicio+"/Imagenes?callback=?",
-					null, function(imagenesResult) {
-						imagenes = imagenesResult;
-						db
-								.transaction(addImagenes, errorCB,
-										successAddImagenes);
-					});
+	$.getJSON(rutaServicio + "/Imagenes?callback=?", null, function(
+			imagenesResult) {
+		imagenes = imagenesResult;
+		db.transaction(addImagenes, errorCB, successAddImagenes);
+	});
 }
 
 function addDepartamentosCiudadesZonas(tx) {
@@ -235,36 +292,33 @@ function succesSelectImagenes() {
 }
 
 function populateDB(tx) {
-    
+
 	database = tx;
 	tx.executeSql('DROP TABLE IF EXISTS CAJEROS');
-	tx
-			.executeSql('CREATE TABLE IF NOT EXISTS CAJEROS (id unique, HorarioAtencion,Direccion,PermiteDeposito,Latitud,Longitud,IdDepartamento,IdCiudad,IdZona)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS CAJEROS (id unique, HorarioAtencion,Direccion,PermiteDeposito,Latitud,Longitud,IdDepartamento,IdCiudad,IdZona)');
 	tx.executeSql('DROP TABLE IF EXISTS CIUDADES');
-	tx
-			.executeSql('CREATE TABLE IF NOT EXISTS CIUDADES (id unique, Nombre,IdDpto)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS CIUDADES (id unique, Nombre,IdDpto)');
 	tx.executeSql('DROP TABLE IF EXISTS DEPARTAMENTOS');
-	tx
-			.executeSql('CREATE TABLE IF NOT EXISTS DEPARTAMENTOS (id unique, Nombre)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS DEPARTAMENTOS (id unique, Nombre)');
 	tx.executeSql('DROP TABLE IF EXISTS SUCURSALES');
-	tx
-			.executeSql('CREATE TABLE IF NOT EXISTS SUCURSALES (id unique, HorarioAtencion,Direccion,TelContacto,Latitud,Longitud,IdDepartamento,IdCiudad,IdZona)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS SUCURSALES (id unique, HorarioAtencion,Direccion,TelContacto,Latitud,Longitud,IdDepartamento,IdCiudad,IdZona)');
 	tx.executeSql('DROP TABLE IF EXISTS TRAMITES');
-	tx
-			.executeSql('CREATE TABLE IF NOT EXISTS TRAMITES (id unique, Descripcion,IdSucursal)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS TRAMITES (id unique, Descripcion,IdSucursal)');
 	tx.executeSql('DROP TABLE IF EXISTS ZONAS');
-	tx
-			.executeSql('CREATE TABLE IF NOT EXISTS ZONAS (id unique, Nombre,IdCiudad)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS ZONAS (id unique, Nombre,IdCiudad)');
 	tx.executeSql('DROP TABLE IF EXISTS IMAGENES');
-	tx
-			.executeSql('CREATE TABLE IF NOT EXISTS IMAGENES (id INTEGER NOT NULL PRIMARY KEY, CadenaBytes)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS IMAGENES (id INTEGER NOT NULL PRIMARY KEY, CadenaBytes)');
+    
+    //agrego tabla para saber cuando fue la ultima actualizacion
+    
+    tx.executeSql('DROP TABLE IF EXISTS ACTUALIZACION');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS ACTUALIZACION (id unique,FechaUltimaActualizacion DATE)');
+    
+//	llamarServicioDepartamentosCiudadesZonas(db);
+//	llamarServicioCajeros(db);
+//	llamarServicioSucursales(db);
+//	llamarServicioImagenes(db);
 
-	llamarServicioDepartamentosCiudadesZonas(db);
-	llamarServicioCajeros(db);
-	llamarServicioSucursales(db);
-    llamarServicioImagenes(db);
-    
-    
 }
 
 function traerDepartamentos() {
@@ -280,72 +334,7 @@ function querySuccessSelectDepartamentos(tx, results) {
 	cargarLista(results, "departamentos");
 }
 
-function cargarListaCheck(results,tipoLista) {
 
-	// obtengo el tag div donde van a ir los dptos o ciudades o zonas
-	var div = document.getElementById("contenedor");
-	$(div).empty();
-	// recorro los dptos o ciudades o zonas
-	for ( var i = 0; i < results.rows.length; i++) {
-		// creo los tags a utilizar
-		var newDiv = document.createElement('div');
-		var inputDiv = document.createElement('input');
-		var lblDiv = document.createElement('label');
-		var spanlbl = document.createElement('span');
-		var spanSpan = document.createElement('span');
-		var spanSpanSpan = document.createElement('span');
-		var spanSpanSpanSpan = document.createElement('span');
-		var spanSpan2 = document.createElement('span');
-
-		// agrego propiedades a los tags
-		// newDiv propiedades
-		newDiv.setAttribute('class', 'ui-radio');
-		// inputDiv propiedades
-		inputDiv.setAttribute('type', 'radio');
-		inputDiv.setAttribute('value', 'choice-' + results.rows.item(i).id);
-		inputDiv.setAttribute('id', 'radio-choice-' + results.rows.item(i).id
-				+ '-a');
-		inputDiv.setAttribute('name', 'radio-choice-a');
-		// lblDiv propiedades
-		lblDiv.setAttribute('id', 'lblID' + results.rows.item(i).id);
-		lblDiv.setAttribute('class', 'ui-corner-none ui-btn ui-btn-icon-left ui-btn-up-a ui-btn-corner-all ui-radio-off ui-btn-up-c');
-		lblDiv.setAttribute('data-form', 'ui-btn-up-a');
-		lblDiv.setAttribute('for', 'radio-choice-' + results.rows.item(i).id
-				+ '-a');
-		lblDiv.setAttribute('data-corners', 'true');
-		lblDiv.setAttribute('data-shadow', 'false');
-		lblDiv.setAttribute('data-iconshadow', 'true');
-		lblDiv.setAttribute('data-wrapperels', 'span');
-		lblDiv.setAttribute('data-icon', 'radio-off');
-		lblDiv.setAttribute('data-theme', 'c');
-		// spanlbl propiedades
-		spanlbl.setAttribute('class', 'ui-btn-inner ui-btn-corner-all');
-		// spanSpan propiedades
-		spanSpan.setAttribute('class', 'ui-btn-text');
-		// spanSpan2 propiedades
-		spanSpan2.setAttribute('class',
-				'ui-icon ui-icon-radio-off ui-icon-shadow');
-		spanSpan2.setAttribute('id', 'spanID' + results.rows.item(i).id);
-		// spanSpanSpan propiedades
-		spanSpanSpan.setAttribute('class', 'ui-btn-inner');
-		// spanSpanSpanSpan propiedades t le doy el valor del dpto o ciudad o
-		// zona (nombre)
-		spanSpanSpanSpan.setAttribute('class', 'ui-btn-text');
-		spanSpanSpanSpan.innerHTML = results.rows.item(i).Nombre;
-
-		// los agrego al div
-		newDiv.appendChild(inputDiv);
-		newDiv.appendChild(lblDiv);
-		lblDiv.appendChild(spanlbl);
-		spanlbl.appendChild(spanSpan);
-		spanSpan.appendChild(spanSpanSpan);
-		spanSpanSpan.appendChild(spanSpanSpanSpan);
-		spanlbl.appendChild(spanSpan2);
-		div.appendChild(newDiv);
-
-		clickCheckbox(results.rows.item(i).id, results,tipoLista);
-	}
-}
 
 // metodo q se encarga de tomar las propiedades y editarlas
 // dependiendo de si son clickeadas o no, si una ya fue clickeada, etc.
@@ -390,11 +379,11 @@ function clickCheckbox(id, lista, tipoLista) {
 					span.setAttribute('class',
 							'ui-icon ui-icon-radio-on ui-icon-shadow');
 					hiddenInput.setAttribute('value', id + "=" + opcionElegida);
-					if(tipoLista=="departamentos"){
+					if (tipoLista == "departamentos") {
 						idDptoSeleccionado = id;
-					}else if(tipoLista=="ciudades"){
+					} else if (tipoLista == "ciudades") {
 						idCiudadSeleccionada = id;
-					}else if(tipoLista=="zonas"){
+					} else if (tipoLista == "zonas") {
 						idZonaSeleccionada = id;
 					}
 				}
@@ -408,17 +397,17 @@ function clickCheckbox(id, lista, tipoLista) {
 				span.setAttribute('class',
 						'ui-icon ui-icon-radio-on ui-icon-shadow');
 				hiddenInput.setAttribute('value', id + "=" + opcionElegida);
-				if(tipoLista=="departamentos"){
+				if (tipoLista == "departamentos") {
 					idDptoSeleccionado = id;
-				}else if(tipoLista=="ciudades"){
+				} else if (tipoLista == "ciudades") {
 					idCiudadSeleccionada = id;
-				}else if(tipoLista=="zonas"){
+				} else if (tipoLista == "zonas") {
 					idZonaSeleccionada = id;
 				}
 			}
-			if (opcionElegida == "cajeros" && tipoLista=="zonas") {
+			if (opcionElegida == "cajeros" && tipoLista == "zonas") {
 				cajerosPorZona(lista.rows.item(i).id);
-			} else if(opcionElegida == "sucursales" && tipoLista=="zonas"){
+			} else if (opcionElegida == "sucursales" && tipoLista == "zonas") {
 				sucursalesPorZona(lista.rows.item(i).id);
 			}
 		}
@@ -484,10 +473,10 @@ function traerSucursalesPorZona(idZona) {
 							var obj = results.rows.item(i);
 							sucursalesAMostrar.push(obj);
 						}
-			
+
 					}
 					cargarMapaSucursalesZona(sucursalesAMostrar);
-						
+
 				});
 
 	});
@@ -534,8 +523,6 @@ function traerSucursalesPorDistancia(distancia, latActual, longActual) {
 					distanciaPuntoAOrigen = calcularDistancia(latActual,
 							longActual, latPunto, longPunto);
 
-					// alert('distancia Punto a Origen:
-					// '+distanciaPuntoAOrigen);
 
 					if (distanciaPuntoAOrigen <= distancia) {
 						sucursalesAMostrar.push(obj);
@@ -556,8 +543,6 @@ function traerCajerosPorDistancia(distancia, latActual, longActual) {
 
 			var cajerosAMostrar = new Array();
 
-			// alert('largo resultado= '+results.rows.length);
-
 			var len = results.rows.length;
 			if (len != 0) {
 				for ( var i = 0; i < len; ++i) {
@@ -571,9 +556,6 @@ function traerCajerosPorDistancia(distancia, latActual, longActual) {
 
 					distanciaPuntoAOrigen = calcularDistancia(latActual,
 							longActual, latPunto, longPunto);
-
-					// alert('distancia Punto a Origen:
-					// '+distanciaPuntoAOrigen);
 
 					if (distanciaPuntoAOrigen <= distancia) {
 						cajerosAMostrar.push(obj);
@@ -643,19 +625,19 @@ function querySuccessSelectCajeros(tx, results) {
 
 function cargarLista(results, tipoLista) {
 	// obtengo el tag ul donde van a ir los elementos
-	//dptos, ciudades, zonas, cajeros, sucursales
-	if (tipoLista == "cajeros"){ 
+	// dptos, ciudades, zonas, cajeros, sucursales
+	if (tipoLista == "cajeros") {
 		var ul = document.getElementById("ulCajeros");
-	}else if (tipoLista == "sucursales"){
+	} else if (tipoLista == "sucursales") {
 		var ul = document.getElementById("ulSucursales");
-	}else if (tipoLista == "departamentos"){  
+	} else if (tipoLista == "departamentos") {
 		var ul = document.getElementById("ulDptos");
-	}else if(tipoLista == "ciudades"){
+	} else if (tipoLista == "ciudades") {
 		var ul = document.getElementById("ulCiudades");
-	}else if (tipoLista == "zonas"){ 
+	} else if (tipoLista == "zonas") {
 		var ul = document.getElementById("ulZonas");
 	}
-					
+
 	$(ul).empty();
 	// recorro los cajeros
 	for ( var i = 0; i < results.rows.length; i++) {
@@ -668,14 +650,16 @@ function cargarLista(results, tipoLista) {
 		// agrego propiedades a los tags
 		// newLi propiedades
 		newLi.setAttribute('data-theme', 'a');
-		newLi.setAttribute('class',	'ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-last ui-btn-up-a');
+		newLi
+				.setAttribute('class',
+						'ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-last ui-btn-up-a');
 		newLi.setAttribute('data-corners', 'false');
 		newLi.setAttribute('data-shadow', 'false');
 		newLi.setAttribute('data-iconshadow', 'true');
 		newLi.setAttribute('data-wrapperels', 'div');
 		newLi.setAttribute('data-icon', 'arrow-r');
 		newLi.setAttribute('data-iconpos', 'right');
-		// newLi propiedades	
+		// newLi propiedades
 		newA.setAttribute('data-transition', 'slide');
 		newA.setAttribute('class', 'ui-link-inherit');
 		// divLi propiedades
@@ -683,27 +667,36 @@ function cargarLista(results, tipoLista) {
 		// divA propiedades
 		divA.setAttribute('class', 'ui-btn-text');
 		// spanDivLi propiedades
-		spanDivLi.setAttribute('class','ui-icon ui-icon-arrow-r ui-icon-shadow');
+		spanDivLi.setAttribute('class',
+				'ui-icon ui-icon-arrow-r ui-icon-shadow');
 
 		// los agrego al ul
-		if (tipoLista == "cajeros"){ 
-			newA.setAttribute('href', 'Cajero.html?id=' + results.rows.item(i).id);
-			newA.appendChild(document.createTextNode(results.rows.item(i).Direccion));
-		}else if (tipoLista == "sucursales"){
-			newA.setAttribute('href', 'Sucursal.html?id=' + results.rows.item(i).id);
-			newA.appendChild(document.createTextNode(results.rows.item(i).Direccion));
-		}else if (tipoLista == "departamentos"){  
-			newA.setAttribute('href', 'FiltroCiudad.html');
-			idDptoSeleccionado = results.rows.item(i).id;
-			newA.appendChild(document.createTextNode(results.rows.item(i).Nombre));
-		}else if(tipoLista == "ciudades"){
-			newA.setAttribute('href', 'FiltroZona.html');
-			idCiudadSeleccionada = results.rows.item(i).id;
-			newA.appendChild(document.createTextNode(results.rows.item(i).Nombre));
-		}else if (tipoLista == "zonas"){ 
-			if(opcionElegida == "cajeros"){ newA.setAttribute('href', 'CajerosMapa.html'); } else { newA.setAttribute('href', 'SucursalesMapa.html'); }
-			idZonaSeleccionada = results.rows.item(i).id;
-			newA.appendChild(document.createTextNode(results.rows.item(i).Nombre));
+		if (tipoLista == "cajeros") {
+			newA.setAttribute('href', 'Cajero.html?id='
+					+ results.rows.item(i).id);
+			newA.appendChild(document
+					.createTextNode(results.rows.item(i).Direccion));
+		} else if (tipoLista == "sucursales") {
+			newA.setAttribute('href', 'Sucursal.html?id='
+					+ results.rows.item(i).id);
+			newA.appendChild(document
+					.createTextNode(results.rows.item(i).Direccion));
+		} else if (tipoLista == "departamentos") {
+			newA.setAttribute('href', 'FiltroCiudad.html?id='+results.rows.item(i).id);
+			newA.appendChild(document
+					.createTextNode(results.rows.item(i).Nombre));
+		} else if (tipoLista == "ciudades") {
+			newA.setAttribute('href', 'FiltroZona.html?id='+results.rows.item(i).id);		
+			newA.appendChild(document
+					.createTextNode(results.rows.item(i).Nombre));
+		} else if (tipoLista == "zonas") {
+			if (opcionElegida == "cajeros") {
+				newA.setAttribute('href', 'CajerosMapa.html?id='+results.rows.item(i).id);
+			} else {
+				newA.setAttribute('href', 'SucursalesMapa.html?id='+results.rows.item(i).id);
+			}			
+			newA.appendChild(document
+					.createTextNode(results.rows.item(i).Nombre));
 		}
 		newLi.appendChild(divLi);
 		divLi.appendChild(divA);
@@ -742,7 +735,8 @@ function successCB() {
 	// alert("Se creo la BD");
 }
 
-function ciudadesPorDepartamento() {	
+function ciudadesPorDepartamento(idDpto) {
+	idDptoSeleccionado=idDpto;
 	db.transaction(selectCiudadesDepartamento, errorCB,
 			succesSelectCiudadesDepartamentos)
 }
@@ -760,7 +754,8 @@ function succesSelectCiudadesDepartamentos() {
 	// alert("Funciono el select de ciudades por departamento");
 }
 
-function zonasPorCiudad(opcion) {
+function zonasPorCiudad(opcion,idCiudad) {
+	idCiudadSeleccionada= idCiudad;
 	filtro = "zona";
 	opcionElegida = opcion;
 	db.transaction(selectZonasCiudad, errorCB, succesSelectZonasCiudad);
@@ -854,8 +849,21 @@ function succesSelectTramitesSucursal() {
 	// alert("Funciono el select de los tramites");
 }
 
-
 function onDeviceReady() {
-	db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
-	db.transaction(populateDB, errorCB, successCB);
+    
+    if(ultimaFechaSincronizacion==null){ //si no hay fecha, es por que no hay db tampoco
+        db.transaction(populateDB, errorCB, successCB); //inicializo la bd
+        sincronizarConServicio(); //cargo con datos del servicio
+    }else{
+        //veo si pasaron 7 dias desde la ultima actualizacion
+        var ultimaAct=ultimaFechaSincronizacion;
+        var fechaNuevaActualizacion=new Date();
+        fechaNuevaActualizacion.setTime(ultimaAct.getDate()+7); //le sumo 7 dias
+        
+        var hoy=new Date();
+        if(hoy>=fechaNuevaActualizacion){ //si ya hace 7 dias que no sincronizo, lo hago
+            sincronizarConServicio();
+        }
+        
+    }
 }

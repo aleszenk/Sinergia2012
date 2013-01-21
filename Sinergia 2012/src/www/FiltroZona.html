@@ -8,7 +8,7 @@
 	<div data-role="page" id="zonas">
 		<div data-role="header" data-theme="b" id="hdrMapa"
 			data-nobackbtn="false">
-			<a href="FiltroCiudad.html" data-icon="arrow-l" data-theme="a">Atras</a>
+			<a class="backWidth" href="FiltroCiudad.html" data-icon="arrow-l" data-theme="a">Atras</a>
 			<h2>Zonas</h2>
 			<a data-role="button" href="index.html" class="ui-btn-right">Inicio</a>
 		</div>
@@ -23,7 +23,9 @@
 					} else {
 						$("#botonAceptar").attr("href", "SucursalesMapa.html");
 					}
-					zonasPorCiudad(opcionElegida);
+					var arrayUrl = document.URL.split('=');
+					var idCiudad = arrayUrl[1];
+					zonasPorCiudad(opcionElegida,idCiudad);
 				});
 			});		
 		</script>

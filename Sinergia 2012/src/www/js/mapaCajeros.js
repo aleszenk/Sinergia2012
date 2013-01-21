@@ -1,6 +1,6 @@
-var map, userPosition;
+var map;
 var GeoMarker;
-var latitudActual, longitudActual, bounds;
+var bounds;
 
 var ventanaMostrarCajeros = new google.maps.InfoWindow();
 
@@ -64,7 +64,7 @@ function mostrarDetallesCajero(detallesDelCajero, mapa, marcador,idCajero) {
 	var detCajero = '<div id="content">' + '<div id="sucursalInfo">' + '</div>'
 			+ '<h1 id="titulo" class="titulo">Cajero</h1>'
 			+ '<div id="contenido">' + '<p> ' + detallesDelCajero + '</p>'
-            + '<a href=Cajero.html?id='+idCajero+'>Ficha</a>'
+            + '<a href=Cajero.html?id='+idCajero+'><img src="img/home.png" /></a>Ver'
 			+ '</div>' + '</div>';
 	
 	ventanaMostrarCajeros.close();
@@ -89,8 +89,7 @@ function cargarMapaCajerosZona(cajerosAux) {
 }
 
 function agregarMarcadoresMapaCajeros(cajerosAux, mapa1) {
-	var bounds = new google.maps.LatLngBounds();
-	//bounds.extend( new google.maps.LatLng(-34.894,-56.178));
+	bounds = new google.maps.LatLngBounds();
 	for ( var i = 0; i < cajerosAux.length; i++) {
 		var latitudeAndLongitudeOne = new google.maps.LatLng(
 				cajerosAux[i].Latitud, cajerosAux[i].Longitud);
@@ -120,8 +119,6 @@ function insertarEventoClickCajero(marker,detalles,mapa,idcajero){
 
 function agregarMarcadoresMapaCajerosDistancia(cajerosAux) {
 	bounds = new google.maps.LatLngBounds();
-//	bounds.extend( new google.maps.LatLng(-34.894,-56.178));
-
 	for ( var i = 0; i < cajerosAux.length; i++) {
 		var latitudeAndLongitudeOne = new google.maps.LatLng(
 				cajerosAux[i].Latitud, cajerosAux[i].Longitud);
@@ -158,7 +155,7 @@ function mostrarCajero(cajero) {
 	});
 	var detalles = "Direccion: " + cajero.Direccion
 			+ "<br/>Horario de Atencion: " + cajero.HorarioAtencion;
-    var idcajero=cajerosAux[i].id;
+    var idcajero=cajero.id;
 	google.maps.event.addListener(marker1, 'click', function() {
 		mostrarDetallesCajero(detalles, map, marker1,idcajero);
 	});
